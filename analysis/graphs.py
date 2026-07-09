@@ -39,9 +39,15 @@ def create_output_directory():
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-def plot_battery_graph():
+def plot_line_graph(y_column, title, y_label, filename):
     """
-    Generate Battery Percentage vs Time graph.
+    Generate and save a reusable line graph.
+
+    Args:
+        y_column (str): Data column to plot.
+        title (str): Graph title.
+        y_label (str): Y-axis label.
+        filename (str): Output image filename.
     """
 
     df = load_data()
@@ -51,14 +57,14 @@ def plot_battery_graph():
 
     plt.plot(
         df["Timestamp"],
-        df["Battery_Percentage"],
+        df[y_column],
         marker="o",
         linewidth=2
     )
 
-    plt.title("Battery Percentage vs Time")
+    plt.title(title)
     plt.xlabel("Time")
-    plt.ylabel("Battery Percentage (%)")
+    plt.ylabel(y_label)
 
     plt.xticks(rotation=45)
 
@@ -66,77 +72,44 @@ def plot_battery_graph():
 
     plt.tight_layout()
 
-    plt.savefig(f"{OUTPUT_DIR}/battery_percentage.png")
+    plt.savefig(f"{OUTPUT_DIR}/{filename}")
 
     plt.close()
 
-    print("✓ Battery graph saved successfully.")
+    print(f"✓ {title} graph saved successfully.")
+
+def plot_battery_graph():
+    """
+    Generate Battery Percentage vs Time graph.
+    """
+    plot_line_graph(
+        "Battery_Percentage",
+        "Battery Percentage vs Time",
+        "Battery Percentage (%)",
+        "battery_percentage.png"
+    )
 
 def plot_cpu_graph():
     """
     Generate CPU Usage vs Time graph.
     """
-
-    df = load_data()
-    create_output_directory()
-
-    plt.figure(figsize=(10, 5))
-
-    plt.plot(
-        df["Timestamp"],
-        df["CPU_Usage"],
-        marker="o",
-        linewidth=2
+    plot_line_graph(
+        "CPU_Usage",
+        "CPU Usage vs Time",
+        "CPU Usage (%)",
+        "cpu_usage.png"
     )
-
-    plt.title("CPU Usage vs Time")
-    plt.xlabel("Time")
-    plt.ylabel("CPU Usage (%)")
-
-    plt.xticks(rotation=45)
-
-    plt.grid(True)
-
-    plt.tight_layout()
-
-    plt.savefig(f"{OUTPUT_DIR}/cpu_usage.png")
-
-    plt.close()
-
-    print("✓ CPU graph saved successfully.")
 
 def plot_ram_graph():
     """
     Generate RAM Usage vs Time graph.
     """
-
-    df = load_data()
-    create_output_directory()
-
-    plt.figure(figsize=(10, 5))
-
-    plt.plot(
-        df["Timestamp"],
-        df["RAM_Usage"],
-        marker="o",
-        linewidth=2
+    plot_line_graph(
+        "RAM_Usage",
+        "RAM Usage vs Time",
+        "RAM Usage (%)",
+        "ram_usage.png"
     )
-
-    plt.title("RAM Usage vs Time")
-    plt.xlabel("Time")
-    plt.ylabel("RAM Usage (%)")
-
-    plt.xticks(rotation=45)
-
-    plt.grid(True)
-
-    plt.tight_layout()
-
-    plt.savefig(f"{OUTPUT_DIR}/ram_usage.png")
-
-    plt.close()
-
-    print("✓ RAM graph saved successfully.")
 
 def plot_charging_graph():
     """
