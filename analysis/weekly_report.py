@@ -199,16 +199,72 @@ def weekly_peak_usage_day(df):
 
     return max(daily_usage, key=daily_usage.get)
 
-if __name__ == "__main__":
-    df = load_data()
+def weekly_battery_wellness(df):
+    """
+    Calculate a weekly battery wellness score.
 
+    The score starts at 100 and deductions are applied
+    based on battery usage, CPU usage, RAM usage,
+    and charging frequency.
+
+    Args:
+        df (pd.DataFrame): Weekly filtered battery log.
+
+    Returns:
+        int: Battery wellness score (0–100).
+    """
+    score = 100
+
+    battery_used = weekly_battery_usage(df)
+    avg_cpu = weekly_average_cpu(df)
+    avg_ram = weekly_average_ram(df)
+    sessions = weekly_charging_sessions(df)
+
+    if battery_used > 20:
+        score -= 20
+
+    if avg_cpu > 50:
+        score -= 15
+
+    if avg_ram > 80:
+        score -= 10
+
+    if sessions > 3:
+        score -= 10
+
+    return max(score, 0)
+
+def generate_weekly_summary():
+    """
+    Generate and display a weekly battery intelligence report.
+    """
+    df = load_data()
     weekly_df = filter_last_7_days(df)
 
-    print(f"Battery Used: {weekly_battery_usage(weekly_df)}%")
-    print(f"Average CPU Usage: {weekly_average_cpu(weekly_df)}%")
-    print(f"Average RAM Usage: {weekly_average_ram(weekly_df)}%")
-    print(f"Charging Sessions: {weekly_charging_sessions(weekly_df)}")
+    if weekly_df.empty:
+        print("No data available for the last 7 days.")
+        return
 
-    print("\nCharging Status Log:")
-    print(weekly_df[["Timestamp", "Charging_Status"]])
-    print(f"Most Active Day: {weekly_peak_usage_day(weekly_df)}")
+    latest_date = weekly_df["Timestamp"].max().date()
+    start_date = latest_date - timedelta(days=6)
+
+    print("=" * 41)
+    print("📅 Weekly Battery Intelligence Report")
+    print("=" * 41)
+
+    print(f"\nWeek:\n{start_date} → {latest_date}")
+
+    print(f"\nBattery Used:\n{weekly_battery_usage(weekly_df)}%")
+
+    print(f"\nAverage CPU:\n{weekly_average_cpu(weekly_df)}%")
+
+    print(f"\nAverage RAM:\n{weekly_average_ram(weekly_df)}%")
+
+    print(f"\nCharging Sessions:\n{weekly_charging_sessions(weekly_df)}")
+
+    print(f"\nMost Active Day:\n{weekly_peak_usage_day(weekly_df)}")
+
+    print(f"\nBattery Wellness:\n{weekly_battery_wellness(weekly_df)}/100")
+
+if __name__ == "__main__":
+    generate_weekly_summary()
