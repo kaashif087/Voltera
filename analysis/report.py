@@ -1,13 +1,5 @@
 import pandas as pd
-
-def load_data(file_path="data/battery_log.csv"):
-    df = pd.read_csv(file_path)
-
-    if "Timestamp" in df.columns:
-        df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-
-    return df
-
+from analysis.helpers import load_data
 
 def battery_used_today(df):
     battery = df["Battery_Percentage"]

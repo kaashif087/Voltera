@@ -9,39 +9,7 @@ using the collected battery and system logs.
 
 import pandas as pd
 from datetime import timedelta
-
-def load_data(file_path="data/battery_log.csv"):
-    """
-    Load battery log data from a CSV file.
-
-    Args:
-        file_path (str): Path to the battery log CSV file.
-
-    Returns:
-        pandas.DataFrame: Loaded battery log data with parsed timestamps.
-
-    Raises:
-        FileNotFoundError: If the CSV file does not exist.
-        ValueError: If the CSV file is empty.
-    """
-    try:
-        df = pd.read_csv(file_path)
-
-        if df.empty:
-            raise ValueError("The battery log file is empty.")
-
-        df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-
-        return df
-
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Battery log file not found: {file_path}")
-
-    except pd.errors.EmptyDataError:
-        raise ValueError("The battery log file contains no data.")
-    
-
-
+from analysis.helpers import load_data
 
 def filter_last_7_days(df):
     """
