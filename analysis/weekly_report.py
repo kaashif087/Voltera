@@ -1,0 +1,214 @@
+"""
+weekly_report.py
+
+Weekly analytics module for VOLTERA.
+
+This module generates weekly battery intelligence reports
+using the collected battery and system logs.
+"""
+
+import pandas as pd
+from datetime import timedelta
+
+def load_data(file_path="data/battery_log.csv"):
+    """
+    Load battery log data from a CSV file.
+
+    Args:
+        file_path (str): Path to the battery log CSV file.
+
+    Returns:
+        pandas.DataFrame: Loaded battery log data with parsed timestamps.
+
+    Raises:
+        FileNotFoundError: If the CSV file does not exist.
+        ValueError: If the CSV file is empty.
+    """
+    try:
+        df = pd.read_csv(file_path)
+
+        if df.empty:
+            raise ValueError("The battery log file is empty.")
+
+        df["Timestamp"] = pd.to_datetime(df["Timestamp"])
+
+        return df
+
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Battery log file not found: {file_path}")
+
+    except pd.errors.EmptyDataError:
+        raise ValueError("The battery log file contains no data.")
+    
+
+
+
+def filter_last_7_days(df):
+    """
+    Filter the DataFrame to include only the last 7 days of data.
+
+    Args:
+        df (pd.DataFrame): Battery log DataFrame.
+
+    Returns:
+        pd.DataFrame: Filtered DataFrame containing the last 7 days of records.
+    """
+    if df.empty:
+        return df
+
+    # Find the most recent timestamp in the dataset
+    latest_timestamp = df["Timestamp"].max()
+
+    # Calculate the starting timestamp (7 days before the latest record)
+    start_timestamp = latest_timestamp - timedelta(days=7)
+
+    # Filter the DataFrame
+    weekly_df = df[df["Timestamp"] >= start_timestamp].copy()
+
+    return weekly_df
+    
+def weekly_battery_usage(df):
+    """
+    Calculate the total battery percentage used over the last 7 days.
+
+    Battery increases caused by charging are ignored.
+    Only battery drops are counted.
+
+    Args:
+        df (pd.DataFrame): Weekly filtered battery log.
+
+    Returns:
+        int: Total battery percentage consumed.
+    """
+    if df.empty:
+        return 0
+
+    battery_levels = df["Battery_Percentage"].tolist()
+
+    battery_used = 0
+
+    for i in range(1, len(battery_levels)):
+        difference = battery_levels[i - 1] - battery_levels[i]
+
+        if difference > 0:
+            battery_used += difference
+
+    return battery_used
+
+def weekly_average_cpu(df):
+    """
+    Calculate the average CPU usage over the last 7 days.
+
+    Args:
+        df (pd.DataFrame): Weekly filtered battery log.
+
+    Returns:
+        float: Average CPU usage rounded to 2 decimal places.
+    """
+    if df.empty:
+        return 0.0
+
+    return round(df["CPU_Usage"].mean(), 2)
+
+def weekly_average_ram(df):
+    """
+    Calculate the average RAM usage over the last 7 days.
+
+    Args:
+        df (pd.DataFrame): Weekly filtered battery log.
+
+    Returns:
+        float: Average RAM usage rounded to 2 decimal places.
+    """
+    if df.empty:
+        return 0.0
+
+    return round(df["RAM_Usage"].mean(), 2)
+
+def weekly_charging_sessions(df):
+    """
+    Count the number of charging sessions during the last 7 days.
+
+    A charging session begins when the charging status changes
+    from False to True.
+
+    Args:
+        df (pd.DataFrame): Weekly filtered battery log.
+
+    Returns:
+        int: Number of charging sessions.
+    """
+    if df.empty:
+        return 0
+
+    charging_status = df["Charging_Status"].tolist()
+
+    sessions = 0
+
+    # Count transitions from False -> True
+    for i in range(1, len(charging_status)):
+        if not charging_status[i - 1] and charging_status[i]:
+            sessions += 1
+
+    # Handle the case where logging started while already charging
+    if charging_status and charging_status[0]:
+        sessions += 1
+
+    return sessions
+
+def weekly_peak_usage_day(df):
+    """
+    Identify the day with the highest battery consumption.
+
+    Battery consumption is calculated by summing only battery
+    percentage drops for each day.
+
+    Args:
+        df (pd.DataFrame): Weekly filtered battery log.
+
+    Returns:
+        str: Day of the week with the highest battery usage.
+    """
+    if df.empty:
+        return "No Data"
+
+    # Work on a copy to avoid modifying the original DataFrame
+    df = df.copy()
+
+    # Extract weekday name
+    df["Day"] = df["Timestamp"].dt.day_name()
+
+    daily_usage = {}
+
+    # Group by day
+    for day, group in df.groupby("Day"):
+        battery_levels = group["Battery_Percentage"].tolist()
+
+        usage = 0
+
+        for i in range(1, len(battery_levels)):
+            difference = battery_levels[i - 1] - battery_levels[i]
+
+            if difference > 0:
+                usage += difference
+
+        daily_usage[day] = usage
+
+    if not daily_usage:
+        return "No Data"
+
+    return max(daily_usage, key=daily_usage.get)
+
+if __name__ == "__main__":
+    df = load_data()
+
+    weekly_df = filter_last_7_days(df)
+
+    print(f"Battery Used: {weekly_battery_usage(weekly_df)}%")
+    print(f"Average CPU Usage: {weekly_average_cpu(weekly_df)}%")
+    print(f"Average RAM Usage: {weekly_average_ram(weekly_df)}%")
+    print(f"Charging Sessions: {weekly_charging_sessions(weekly_df)}")
+
+    print("\nCharging Status Log:")
+    print(weekly_df[["Timestamp", "Charging_Status"]])
+    print(f"Most Active Day: {weekly_peak_usage_day(weekly_df)}")
