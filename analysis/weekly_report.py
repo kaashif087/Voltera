@@ -7,9 +7,8 @@ This module generates weekly battery intelligence reports
 using the collected battery and system logs.
 """
 
-import pandas as pd
 from datetime import timedelta
-from analysis.helpers import load_data
+
 from analysis.helpers import (
     load_data,
     calculate_average,
@@ -109,17 +108,7 @@ def weekly_peak_usage_day(df):
 
     # Group by day
     for day, group in df.groupby("Day"):
-        battery_levels = group["Battery_Percentage"].tolist()
-
-        usage = 0
-
-        for i in range(1, len(battery_levels)):
-            difference = battery_levels[i - 1] - battery_levels[i]
-
-            if difference > 0:
-                usage += difference
-
-        daily_usage[day] = usage
+        daily_usage[day] = calculate_battery_usage(group)
 
     if not daily_usage:
         return "No Data"

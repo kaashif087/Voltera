@@ -1,48 +1,29 @@
 import pandas as pd
 from analysis.helpers import load_data
+from analysis.helpers import (
+    load_data,
+    calculate_average,
+    calculate_battery_usage,
+    calculate_charging_sessions,
+)
 
 def battery_used_today(df):
-    battery = df["Battery_Percentage"]
-
-    battery_used = 0
-
-    for i in range(1, len(battery)):
-        difference = battery.iloc[i - 1] - battery.iloc[i]
-
-        if difference > 0:
-            battery_used += difference
-
-    return battery_used
+    """
+    Calculate today's battery usage.
+    """
+    return calculate_battery_usage(df)
 
 def average_cpu_usage(df):
-    """
-    Calculate the average CPU usage.
-    """
-    return round(df["CPU_Usage"].mean(), 2)
+    return calculate_average(df["CPU_Usage"])
 
 def average_ram_usage(df):
-    """
-    Calculate the average RAM usage.
-    """
-    return round(df["RAM_Usage"].mean(), 2)
+    return calculate_average(df["RAM_Usage"])
 
 def charging_sessions(df):
     """
-    Count the number of charging sessions.
-    A session starts when charging changes from False to True.
+    Count today's charging sessions.
     """
-    sessions = 0
-    previous = False
-
-    for value in df["Charging_Status"]:
-        current = str(value).strip().lower() == "true"
-
-        if current and not previous:
-            sessions += 1
-
-        previous = current
-
-    return sessions
+    return calculate_charging_sessions(df)
 
 def peak_battery_usage_time(df):
     """

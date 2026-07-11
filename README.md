@@ -69,7 +69,7 @@ Voltera/
 ├── main.py
 ├── requirements.txt
 └── README.md
-
+````
 ## 🛠️ Development Progress
 
 ### ✅ Sprint 0 — Planning
@@ -109,7 +109,7 @@ Voltera/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/kaashif087/Voltera.git
 cd Voltera
 ```
 
@@ -185,3 +185,13 @@ python -m analysis.graphs
 - **Sprint 11** — Smart Notifications
 - **Sprint 12** — Cloud Sync
 - **Sprint 13** — JARVIS Integration
+
+## 📌 Project Status
+
+VOLTERA is currently under active development.
+
+The project is presently focused on building a reliable analytics foundation before introducing AI capabilities. Future versions will use historical battery and system data to provide intelligent recommendations, predictive analytics, and battery-aware task planning.
+
+## 🎯 Long-Term Vision
+
+VOLTERA aims to evolve from a battery analytics platform into an intelligent battery assistant capable of understanding usage patterns, predicting battery behavior, recommending optimizations, and integrating with the future JARVIS ecosystem.
