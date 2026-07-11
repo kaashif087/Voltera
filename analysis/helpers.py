@@ -114,9 +114,6 @@ def calculate_charging_sessions(df):
 
     return sessions
 
-"""
-helpers.py
 
-Shared analytics functions for VOLTERA.
-"""
+
 
