@@ -10,6 +10,12 @@ using the collected battery and system logs.
 import pandas as pd
 from datetime import timedelta
 from analysis.helpers import load_data
+from analysis.helpers import (
+    load_data,
+    calculate_average,
+    calculate_battery_usage,
+    calculate_charging_sessions,
+)
 
 def filter_last_7_days(df):
     """
@@ -37,31 +43,9 @@ def filter_last_7_days(df):
     
 def weekly_battery_usage(df):
     """
-    Calculate the total battery percentage used over the last 7 days.
-
-    Battery increases caused by charging are ignored.
-    Only battery drops are counted.
-
-    Args:
-        df (pd.DataFrame): Weekly filtered battery log.
-
-    Returns:
-        int: Total battery percentage consumed.
+    Calculate weekly battery usage.
     """
-    if df.empty:
-        return 0
-
-    battery_levels = df["Battery_Percentage"].tolist()
-
-    battery_used = 0
-
-    for i in range(1, len(battery_levels)):
-        difference = battery_levels[i - 1] - battery_levels[i]
-
-        if difference > 0:
-            battery_used += difference
-
-    return battery_used
+    return calculate_battery_usage(df)
 
 def weekly_average_cpu(df):
     """
@@ -76,7 +60,7 @@ def weekly_average_cpu(df):
     if df.empty:
         return 0.0
 
-    return round(df["CPU_Usage"].mean(), 2)
+    return calculate_average(df["CPU_Usage"])
 
 def weekly_average_ram(df):
     """
@@ -91,38 +75,13 @@ def weekly_average_ram(df):
     if df.empty:
         return 0.0
 
-    return round(df["RAM_Usage"].mean(), 2)
+    return calculate_average(df["RAM_Usage"])
 
 def weekly_charging_sessions(df):
     """
-    Count the number of charging sessions during the last 7 days.
-
-    A charging session begins when the charging status changes
-    from False to True.
-
-    Args:
-        df (pd.DataFrame): Weekly filtered battery log.
-
-    Returns:
-        int: Number of charging sessions.
+    Count charging sessions during the week.
     """
-    if df.empty:
-        return 0
-
-    charging_status = df["Charging_Status"].tolist()
-
-    sessions = 0
-
-    # Count transitions from False -> True
-    for i in range(1, len(charging_status)):
-        if not charging_status[i - 1] and charging_status[i]:
-            sessions += 1
-
-    # Handle the case where logging started while already charging
-    if charging_status and charging_status[0]:
-        sessions += 1
-
-    return sessions
+    return calculate_charging_sessions(df)
 
 def weekly_peak_usage_day(df):
     """

@@ -120,24 +120,3 @@ helpers.py
 Shared analytics functions for VOLTERA.
 """
 
-import pandas as pd
-
-# =====================================
-# Data Loading
-# =====================================
-
-load_data()
-
-# =====================================
-# Statistical Helpers
-# =====================================
-
-calculate_average()
-
-# =====================================
-# Battery Analytics
-# =====================================
-
-calculate_battery_usage()
-
-calculate_charging_sessions()
