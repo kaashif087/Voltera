@@ -1,3 +1,7 @@
+from prediction.prediction_intelligence import (
+    generate_prediction_intelligence
+)
+
 import joblib
 import pandas as pd
 from prediction.data_preprocessing import prepare_prediction_data
@@ -69,3 +73,22 @@ def predict_battery(feature_dict):
 
     return prediction[0]
 
+def get_prediction_intelligence(
+    features,
+    is_charging=False
+):
+    """
+    Predict future battery percentage and return
+    validated VOLTERA battery intelligence.
+    """
+
+    raw_prediction = predict_battery(features)
+
+    return generate_prediction_intelligence(
+        current_battery=features["Battery_Percentage"],
+        predicted_battery=raw_prediction,
+        prediction_horizon_minutes=features[
+            "Prediction_Horizon_Minutes"
+        ],
+        is_charging=is_charging
+    )

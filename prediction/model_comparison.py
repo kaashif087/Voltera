@@ -1,3 +1,4 @@
+import joblib
 """
 model_comparison.py
 
@@ -89,6 +90,29 @@ def compare_models(X_train, X_test, y_train, y_test):
 
     return results
 
+def select_best_model(results):
+    """
+    Select the best-performing model based on the lowest RMSE.
+
+    If multiple models have the same RMSE,
+    the first model in the results dictionary is selected.
+    """
+
+    best_model_name = min(
+        results,
+        key=lambda model_name: results[model_name]["rmse"]
+    )
+
+    best_result = results[best_model_name]
+
+    return {
+        "name": best_model_name,
+        "model": best_result["model"],
+        "mae": best_result["mae"],
+        "rmse": best_result["rmse"],
+        "r2": best_result["r2"]
+    }
+
 def run_model_comparison(file_path):
     """
     Run the complete VOLTERA model comparison pipeline.
@@ -115,6 +139,19 @@ def run_model_comparison(file_path):
         y_test
     )
 
+    # Select best-performing model
+    best_model = select_best_model(results)
+
+        # Save the selected best model
+    joblib.dump(
+        best_model["model"],
+        "prediction/battery_model.pkl"
+    )
+
+    print(
+        f"\n✓ Best model saved: {best_model['name']}"
+    )
+
     print("=" * 60)
     print("VOLTERA MODEL COMPARISON")
     print("=" * 60)
@@ -125,8 +162,17 @@ def run_model_comparison(file_path):
         print(f"RMSE : {result['rmse']:.2f}")
         print(f"R²   : {result['r2']:.2f}")
 
-    return results
+    # Outside the for loop, but inside the function
+    print("\n" + "=" * 60)
+    print("BEST MODEL")
+    print("=" * 60)
 
+    print(f"Model : {best_model['name']}")
+    print(f"MAE   : {best_model['mae']:.2f}")
+    print(f"RMSE  : {best_model['rmse']:.2f}")
+    print(f"R²    : {best_model['r2']:.2f}")
+
+    return results, best_model
 
 if __name__ == "__main__":
     run_model_comparison("data/battery_log.csv")
