@@ -39,5 +39,19 @@ Design Goals:
     - Explainable
     - Reusable
     - Easy to integrate with future VOLTERA modules and JARVIS
+
+    Prediction Awareness:
+
+The engine can use prediction intelligence to improve
+recommendations by considering:
+
+    - Current battery level
+    - Predicted battery level
+    - Prediction time horizon
+    - Expected battery change
+
+Prediction data helps VOLTERA provide
+time-aware battery decisions.
+
 """
 
