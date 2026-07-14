@@ -23,13 +23,20 @@ Output:
 """
 
 PRIORITY_LEVELS = {
-    "CRITICAL_BATTERY": 4,
-    "RAPID_DRAIN": 3,
+    "CRITICAL_BATTERY": 5,
+    "PREDICTED_CRITICAL_BATTERY": 5,
+
+    "RAPID_DRAIN": 4,
+
     "LOW_BATTERY": 3,
+    "PREDICTED_LOW_BATTERY": 3,
+
     "HIGH_SYSTEM_LOAD": 2,
     "HIGH_BATTERY_CHARGING": 2,
+
     "NORMAL_CHARGING": 1,
-    "BATTERY_STABLE": 1
+    "BATTERY_STABLE": 1,
+    "BATTERY_FORECAST_STABLE": 1
 }
 
 def select_highest_priority(situations):
