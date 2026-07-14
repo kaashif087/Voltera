@@ -1,3 +1,5 @@
+import joblib
+import pandas as pd
 from prediction.data_preprocessing import prepare_prediction_data
 from prediction.feature_engineering import engineer_features
 from prediction.baseline_model import (
@@ -43,3 +45,27 @@ def run_prediction_pipeline(file_path):
         "mae": mae,
         "rmse": rmse
     }
+
+def load_trained_model():
+    """
+    Load the saved VOLTERA prediction model.
+    """
+
+    return joblib.load(
+        "prediction/battery_model.pkl"
+    )
+
+def predict_battery(feature_dict):
+    """
+    Predict battery percentage using
+    the saved trained model.
+    """
+
+    model = load_trained_model()
+
+    input_df = pd.DataFrame([feature_dict])
+
+    prediction = model.predict(input_df)
+
+    return prediction[0]
+

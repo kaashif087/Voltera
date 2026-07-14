@@ -37,6 +37,20 @@ def add_rolling_features(df, window=3):
 
     return df
 
+def add_usage_intensity(df):
+    """
+    Calculate overall device usage intensity.
+    """
+
+    df = df.copy()
+
+    df["Usage_Intensity"] = (
+        df["CPU_Usage"] +
+        df["RAM_Usage"]
+    ) / 2
+
+    return df
+
 def add_discharge_sessions(df, max_gap_minutes=30):
     """
     Assign a session ID to continuous discharging periods.
@@ -89,10 +103,13 @@ def engineer_features(df):
     """
     Run the complete VOLTERA feature-engineering pipeline.
     """
+
     df = add_time_features(df)
     df = add_drain_rate_feature(df)
     df = add_rolling_features(df)
+    df = add_usage_intensity(df)
     df = add_discharge_sessions(df)
     df = add_prediction_target(df)
 
     return df
+

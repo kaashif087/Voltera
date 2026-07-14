@@ -62,3 +62,4 @@ def evaluate_model(model, X_test, y_test):
     )
 
     return predictions, mae, rmse
+
