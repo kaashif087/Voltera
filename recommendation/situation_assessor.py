@@ -64,3 +64,16 @@ def assess_system_load(cpu_usage, ram_usage):
         return "HIGH_SYSTEM_LOAD"
 
     return None
+
+if __name__ == "__main__":
+    cpu = 50
+    ram = 50
+    expected = None
+    result = assess_system_load(cpu, ram)
+    status = "PASS" if result == expected else "FAIL"
+
+    print(
+        f"CPU={cpu}% | RAM={ram}% | "
+        f"Expected={expected} | "
+        f"Got={result} | {status}"
+    )

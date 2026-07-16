@@ -138,9 +138,5 @@ def generate_recommendation(battery_context):
             selected_situation
         )
 
-    print("All Detected Situations:", situations)
-    print("Selected Situation:", selected_situation)
-    print("Recommendation:", recommendation)
-
     return recommendation
 
