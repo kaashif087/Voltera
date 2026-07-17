@@ -1,85 +1,153 @@
-from recommendation.recommendation_engine import generate_recommendation
+import os
+import sys
+
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..")
+    )
+)
+
+from recommendation.recommendation_engine import (
+    generate_recommendation
+)
+
+
+def run_test(name, context):
+
+    print("\n" + "=" * 60)
+    print(f"Test : {name}")
+    print("=" * 60)
+
+    try:
+
+        result = generate_recommendation(context)
+
+        print("PASS")
+        print(result)
+
+    except Exception as error:
+
+        print("Handled Exception")
+        print(type(error).__name__)
+        print(error)
 
 
 test_cases = [
-    {
-        "name": "Critical Future Battery",
-        "context": {
-            "battery_percentage": 25,
+
+    (
+        "Empty Context",
+        {}
+    ),
+
+    (
+        "Missing Predicted Battery",
+        {
+            "battery_percentage": 50,
             "charging": False,
             "cpu_usage": 40,
+            "ram_usage": 35,
+            "expected_change": -5
+        }
+    ),
+
+    (
+        "Missing CPU",
+        {
+            "battery_percentage": 50,
+            "charging": False,
             "ram_usage": 40,
-            "predicted_battery": 8,
-            "prediction_horizon_minutes": 30,
-            "expected_change": -17
-        }
-    },
-
-    {
-        "name": "Low Battery Current",
-        "context": {
-            "battery_percentage": 15,
-            "charging": False,
-            "cpu_usage": 20,
-            "ram_usage": 30,
-            "predicted_battery": 12,
-            "prediction_horizon_minutes": 30,
-            "expected_change": -3
-        }
-    },
-
-    {
-        "name": "High System Load",
-        "context": {
-            "battery_percentage": 60,
-            "charging": False,
-            "cpu_usage": 90,
-            "ram_usage": 85,
-            "predicted_battery": 55,
+            "predicted_battery": 45,
             "prediction_horizon_minutes": 30,
             "expected_change": -5
         }
-    },
+    ),
 
-    {
-        "name": "Healthy Battery",
-        "context": {
-            "battery_percentage": 70,
+    (
+        "Missing RAM",
+        {
+            "battery_percentage": 50,
             "charging": False,
             "cpu_usage": 30,
-            "ram_usage": 40,
-            "predicted_battery": 68,
+            "predicted_battery": 45,
             "prediction_horizon_minutes": 30,
-            "expected_change": -2
+            "expected_change": -5
         }
-    },
+    ),
 
-    {
-        "name": "High Battery Charging",
-        "context": {
-            "battery_percentage": 90,
-            "charging": True,
-            "cpu_usage": 20,
+    (
+        "Negative Battery",
+        {
+            "battery_percentage": -5,
+            "charging": False,
+            "cpu_usage": 30,
             "ram_usage": 30,
-            "predicted_battery": 95,
+            "predicted_battery": -10,
             "prediction_horizon_minutes": 30,
-            "expected_change": 5
+            "expected_change": -5
         }
-    }
+    ),
+
+    (
+        "Battery Above 100",
+        {
+            "battery_percentage": 150,
+            "charging": False,
+            "cpu_usage": 20,
+            "ram_usage": 20,
+            "predicted_battery": 145,
+            "prediction_horizon_minutes": 30,
+            "expected_change": -5
+        }
+    ),
+
+    (
+        "Invalid Battery Type",
+        {
+            "battery_percentage": "Fifty",
+            "charging": False,
+            "cpu_usage": 20,
+            "ram_usage": 20,
+            "predicted_battery": 45,
+            "prediction_horizon_minutes": 30,
+            "expected_change": -5
+        }
+    ),
+
+    (
+        "Battery None",
+        {
+            "battery_percentage": None,
+            "charging": False,
+            "cpu_usage": 20,
+            "ram_usage": 20,
+            "predicted_battery": 40,
+            "prediction_horizon_minutes": 30,
+            "expected_change": -5
+        }
+    ),
+
+    (
+        "Multiple Serious Problems",
+        {
+            "battery_percentage": 5,
+            "charging": False,
+            "cpu_usage": 95,
+            "ram_usage": 95,
+            "predicted_battery": 2,
+            "prediction_horizon_minutes": 30,
+            "expected_change": -25
+        }
+    )
+
 ]
 
+print("\n==============================================")
+print("Recommendation Edge Case Test Suite")
+print("==============================================")
 
-for test in test_cases:
-    print("\n" + "=" * 40)
-    print(f"Test: {test['name']}")
-    print("=" * 40)
+for name, context in test_cases:
+    run_test(name, context)
 
-    result = generate_recommendation(test["context"])
-
-    if result:
-        print(f"Priority      : {result['priority']}")
-        print(f"Title         : {result['title']}")
-        print(f"Recommendation: {result['recommendation']}")
-        print(f"Reason        : {result['reason']}")
-    else:
-        print("No recommendation generated.")
+print("\n==============================================")
+print("Edge Case Tests Completed")
+print("==============================================")

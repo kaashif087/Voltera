@@ -1,4 +1,3 @@
-import recommendation
 from recommendation.prediction_rules import (
     assess_prediction_state,
     get_prediction_recommendation
@@ -15,7 +14,6 @@ from recommendation.priority_manager import (
 from recommendation.situation_assessor import (
     assess_battery_level,
     assess_charging_status,
-    assess_prediction,
     assess_system_load
 )
 
@@ -75,6 +73,7 @@ Prediction data helps VOLTERA provide
 time-aware battery decisions.
 
 """
+from recommendation.input_validator import validate_battery_context
 
 def generate_recommendation(battery_context):
     """
@@ -90,7 +89,7 @@ def generate_recommendation(battery_context):
         None:
             If no recommendation exists.
     """
-
+    validate_battery_context(battery_context)
     situations = []
 
     battery_situation = assess_battery_level(
@@ -125,11 +124,17 @@ def generate_recommendation(battery_context):
     if not situations:
         return None
 
-    selected_situation = get_highest_priority_recommendation(situations)
-    if selected_situation.startswith("PREDICTED") or selected_situation in [
-    "SIGNIFICANT_FUTURE_DRAIN",
-    "BATTERY_FORECAST_STABLE"
-]:
+    PREDICTION_STATES = {
+        "PREDICTED_CRITICAL_BATTERY",
+        "PREDICTED_LOW_BATTERY",
+        "SIGNIFICANT_FUTURE_DRAIN",
+        "BATTERY_FORECAST_STABLE"
+    }
+
+    selected_situation = get_highest_priority_recommendation(
+        situations
+)
+    if selected_situation in PREDICTION_STATES:
         recommendation = get_prediction_recommendation(
             selected_situation
         )
@@ -139,4 +144,3 @@ def generate_recommendation(battery_context):
         )
 
     return recommendation
-
