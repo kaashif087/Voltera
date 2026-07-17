@@ -39,7 +39,7 @@ test_cases = [
             "prediction_horizon_minutes": 30,
             "expected_change": -2
         },
-        "expected": "Critical Battery"
+        "expected": "Critical Battery Level"
     },
 
     {
@@ -53,7 +53,7 @@ test_cases = [
             "prediction_horizon_minutes": 30,
             "expected_change": -2
         },
-        "expected": "Low Battery"
+        "expected": "Low Battery Level"
     },
 
     {
@@ -81,7 +81,7 @@ test_cases = [
             "prediction_horizon_minutes": 30,
             "expected_change": -2
         },
-        "expected": "High System Load"
+        "expected": "High System Load Detected"
     }
 
 ]

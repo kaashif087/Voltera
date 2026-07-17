@@ -28,6 +28,7 @@ Design Goals:
 RECOMMENDATION_RULES = {
 
     "CRITICAL_BATTERY": {
+        "situation": "CRITICAL_BATTERY",
         "priority": "CRITICAL",
         "title": "Critical Battery Level",
         "recommendation": (
@@ -41,6 +42,7 @@ RECOMMENDATION_RULES = {
     },
 
     "LOW_BATTERY": {
+        "situation": "LOW_BATTERY",
         "priority": "HIGH",
         "title": "Low Battery Level",
         "recommendation": (
@@ -54,6 +56,7 @@ RECOMMENDATION_RULES = {
     },
 
     "RAPID_DRAIN": {
+        "situation": "RAPID_DRAIN",
         "priority": "HIGH",
         "title": "Rapid Battery Drain Detected",
         "recommendation": (
@@ -67,6 +70,7 @@ RECOMMENDATION_RULES = {
     },
 
     "HIGH_BATTERY_CHARGING": {
+        "situation": "HIGH_BATTERY_CHARGING",
         "priority": "MEDIUM",
         "title": "Battery Above 80% While Charging",
         "recommendation": (
@@ -80,6 +84,7 @@ RECOMMENDATION_RULES = {
     },
 
     "NORMAL_CHARGING": {
+        "situation": "NORMAL_CHARGING",
         "priority": "LOW",
         "title": "Charging Normally",
         "recommendation": (
@@ -91,6 +96,7 @@ RECOMMENDATION_RULES = {
     },
 
     "HIGH_SYSTEM_LOAD": {
+        "situation": "HIGH_SYSTEM_LOAD",
         "priority": "MEDIUM",
         "title": "High System Load Detected",
         "recommendation": (
@@ -103,6 +109,7 @@ RECOMMENDATION_RULES = {
     },
 
     "BATTERY_STABLE": {
+        "situation": "BATTERY_STABLE",
         "priority": "LOW",
         "title": "Battery Stable",
         "recommendation": (
@@ -114,6 +121,7 @@ RECOMMENDATION_RULES = {
     }
 
 }
+
 
 def get_recommendation_rule(situation):
     """
