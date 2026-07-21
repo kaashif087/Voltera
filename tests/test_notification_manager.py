@@ -28,3 +28,4 @@ critical = create_notification("Critical Battery Level")
 print(manager.process(critical))
 
 print(manager.get_history())
+
