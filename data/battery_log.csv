@@ -29,3 +29,5 @@ Timestamp,Battery_Percentage,Charging_Status,Battery_Time_Left,CPU_Usage,RAM_Usa
 2026-07-21 09:39:14.706306,62,False,4294967295,8.5,84.2,System Idle Process
 2026-07-21 09:39:26.591622,62,False,4294967295,3.5,83.5,System Idle Process
 2026-07-21 09:39:47.621758,62,False,4294967295,9.7,84.4,Unknown
+2026-07-21 15:07:12.410652,18,False,4294967295,9.0,81.1,Unknown
+2026-07-21 15:07:19.802691,18,False,4294967295,7.2,80.9,System Idle Process
