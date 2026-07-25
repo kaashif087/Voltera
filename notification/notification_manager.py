@@ -14,7 +14,7 @@ import time
 from notification.history import NotificationHistory
 from notification.notification_rules import CRITICAL
 
-
+print("Loading Notification Manager...")
 class NotificationManager:
     """
     Controls when notifications should be sent.
@@ -36,6 +36,11 @@ class NotificationManager:
         """
 
         self.last_notifications = {}
+
+        # Persistent notification history
+        self.history = NotificationHistory()
+
+        print("NotificationHistory initialized")
 
     # ---------------------------------------------------------
 
@@ -129,6 +134,9 @@ class NotificationManager:
             return False
 
         self.update_history(notification)
+
+            # Save notification to CSV
+        self.history.save(notification)
 
         return True
 
