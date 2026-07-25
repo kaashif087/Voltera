@@ -1,0 +1,2 @@
+timestamp,recommendation,priority,title,message,reason,status
+2026-07-25 20:11:09,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
