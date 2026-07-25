@@ -11,7 +11,7 @@ Author: VOLTERA
 """
 
 import time
-
+from notification.history import NotificationHistory
 from notification.notification_rules import CRITICAL
 
 
