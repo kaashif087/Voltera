@@ -1,2 +1,11 @@
 timestamp,recommendation,priority,title,message,reason,status
 2026-07-25 20:11:09,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-07-26 19:30:18,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-07-26 19:30:18,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-07-26 19:30:18,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-07-26 19:32:58,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-07-26 19:32:58,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-07-26 19:32:58,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-07-26 19:32:58,High System Load,MEDIUM,High System Load,High CPU or RAM usage is affecting battery life.,Generated from Recommendation Engine,Sent
+2026-07-26 19:32:58,High Battery While Charging,MEDIUM,Battery Charged,Battery is highly charged. Consider unplugging the charger.,Generated from Recommendation Engine,Sent
+2026-07-26 19:32:58,Battery Stable,LOW,Battery Stable,Battery condition is stable.,Generated from Recommendation Engine,Sent

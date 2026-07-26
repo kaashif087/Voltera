@@ -11,8 +11,15 @@ Author: VOLTERA
 """
 
 import time
+
 from notification.history import NotificationHistory
 from notification.notification_rules import CRITICAL
+
+from personalization.preference_manager import PreferenceManager
+from personalization.preference_rules import PreferenceRules
+from personalization.gaming_mode import GamingMode
+from personalization.quiet_hours import QuietHours
+
 
 print("Loading Notification Manager...")
 class NotificationManager:
@@ -41,6 +48,23 @@ class NotificationManager:
         self.history = NotificationHistory()
 
         print("NotificationHistory initialized")
+
+                # Load user preferences
+        self.preference_manager = PreferenceManager()
+        self.profile = self.preference_manager.load_preferences()
+
+        # Initialize personalization modules
+        self.preference_rules = PreferenceRules(self.profile)
+
+        self.gaming_mode = GamingMode(
+            enabled=self.profile.gaming_mode
+        )
+
+        self.quiet_hours = QuietHours(
+            enabled=self.profile.quiet_hours_enabled,
+            start=self.profile.quiet_start,
+            end=self.profile.quiet_end
+        )
 
     # ---------------------------------------------------------
 
@@ -91,7 +115,72 @@ class NotificationManager:
 
         return True
 
-    # ---------------------------------------------------------
+    def passes_personalization(self, notification):
+        """
+        Determines whether the notification should be sent
+        according to user preferences.
+        """
+
+        notification_type = notification["type"]
+        priority = notification["priority"]
+
+        # -----------------------------
+        # Battery Notifications
+        # -----------------------------
+        if notification_type == "Low Battery Level":
+            battery = notification.get("battery_percentage", 0)
+
+            if not self.preference_rules.is_battery_notification_allowed(battery):
+                return False
+
+        # -----------------------------
+        # Prediction Alerts
+        # -----------------------------
+        elif notification_type in (
+            "Predicted Low Battery",
+            "Predicted Critical Battery"
+        ):
+            if not self.preference_rules.is_prediction_notification_allowed():
+                return False
+
+        # -----------------------------
+        # Rapid Drain
+        # -----------------------------
+        elif notification_type == "Rapid Battery Drain":
+            if not self.preference_rules.is_rapid_drain_notification_allowed():
+                return False
+
+        # -----------------------------
+        # High System Load
+        # -----------------------------
+        elif notification_type == "High System Load":
+            if not self.preference_rules.is_system_load_notification_allowed():
+                return False
+
+        # -----------------------------
+        # Charging Notifications
+        # -----------------------------
+        elif notification_type in (
+            "High Battery While Charging",
+            "Charging Normally"
+        ):
+            if not self.preference_rules.is_charging_notification_allowed():
+                return False
+
+        # -----------------------------
+        # Gaming Mode
+        # -----------------------------
+        if not self.gaming_mode.is_notification_allowed(priority):
+            return False
+
+        # -----------------------------
+        # Quiet Hours
+        # -----------------------------
+        if not self.quiet_hours.is_notification_allowed(priority):
+            return False
+
+        return True
+        # ---------------------------------------------------------
 
     def update_history(self, notification):
         """
@@ -119,15 +208,11 @@ class NotificationManager:
     # ---------------------------------------------------------
 
     def process(self, notification):
-        """
-        Main entry point.
-
-        Returns:
-            True  -> Notification allowed
-            False -> Notification suppressed
-        """
 
         if notification is None:
+            return False
+
+        if not self.passes_personalization(notification):
             return False
 
         if not self.can_send(notification):
@@ -135,7 +220,6 @@ class NotificationManager:
 
         self.update_history(notification)
 
-            # Save notification to CSV
         self.history.save(notification)
 
         return True
