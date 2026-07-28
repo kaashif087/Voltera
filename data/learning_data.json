@@ -1,6 +1,10 @@
 {
-    "test": "VOLTERA",
+    "usage_patterns": {},
+    "charging_patterns": {},
+    "battery_behavior": {},
+    "application_usage": {},
     "metadata": {
-        "last_updated": "2026-07-28T09:12:57"
+        "samples": 0,
+        "last_updated": "2026-07-28T15:20:32"
     }
 }
