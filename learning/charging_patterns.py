@@ -194,3 +194,29 @@ class ChargingPatterns:
             previous_status = current_status
 
         return False
+
+    def learn(self, dataframe):
+
+        self.learning_manager.set_value(
+            "charging_patterns",
+            "usual_charging_hour",
+            self.learn_usual_charging_hour(dataframe)
+        )
+
+        self.learning_manager.set_value(
+            "charging_patterns",
+            "average_charging_duration",
+            self.learn_average_charging_duration(dataframe)
+        )
+
+        self.learning_manager.set_value(
+            "charging_patterns",
+            "average_unplug_percentage",
+            self.learn_average_unplug_percentage(dataframe)
+        )
+
+        self.learning_manager.set_value(
+            "charging_patterns",
+            "overnight_charging",
+            self.learn_overnight_charging(dataframe)
+        )

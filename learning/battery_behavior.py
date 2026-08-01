@@ -226,3 +226,29 @@ class BatteryBehavior:
             return "Stable"
 
         return "Unstable"
+
+    def learn(self, dataframe):
+
+        self.learning_manager.set_value(
+            "battery_behavior",
+            "average_drain_rate",
+            self.learn_average_drain_rate(dataframe)
+        )
+
+        self.learning_manager.set_value(
+            "battery_behavior",
+            "average_charging_speed",
+            self.learn_average_charging_speed(dataframe)
+        )
+
+        self.learning_manager.set_value(
+            "battery_behavior",
+            "heavy_usage_periods",
+            self.learn_heavy_usage_periods(dataframe)
+        )
+
+        self.learning_manager.set_value(
+            "battery_behavior",
+            "battery_stability",
+            self.learn_battery_stability(dataframe)
+        )

@@ -1,10 +1,64 @@
 {
-    "usage_patterns": {},
-    "charging_patterns": {},
-    "battery_behavior": {},
-    "application_usage": {},
+    "usage_patterns": {
+        "active_hours": [
+            9,
+            10,
+            11,
+            21
+        ],
+        "idle_hours": [
+            9,
+            10,
+            11,
+            21
+        ],
+        "average_battery_by_hour": {
+            "9": 100.0,
+            "10": 90.0,
+            "11": 80.0,
+            "21": 70.0,
+            "22": 90.0
+        },
+        "weekday_weekend_usage": {
+            "weekday_average_usage": 5.0,
+            "weekend_average_usage": 0.0
+        }
+    },
+    "charging_patterns": {
+        "usual_charging_hour": 22,
+        "average_charging_duration": 0.0,
+        "average_unplug_percentage": 0.0,
+        "overnight_charging": false
+    },
+    "battery_behavior": {
+        "average_drain_rate": 7.0,
+        "average_charging_speed": 0.0,
+        "heavy_usage_periods": [],
+        "battery_stability": "Unstable"
+    },
+    "application_usage": {
+        "most_used_apps": {
+            "VS Code": 3,
+            "Chrome": 1,
+            "Spotify": 1
+        },
+        "usage_duration": {
+            "VS Code": 3,
+            "Chrome": 1,
+            "Spotify": 1
+        },
+        "work_vs_entertainment": {
+            "work": 3,
+            "entertainment": 2
+        },
+        "battery_intensive_apps": {
+            "Chrome": 10.0,
+            "Spotify": 10.0,
+            "VS Code": -5.0
+        }
+    },
     "metadata": {
         "samples": 0,
-        "last_updated": "2026-07-28T15:20:32"
+        "last_updated": "2026-08-01T22:47:34"
     }
 }

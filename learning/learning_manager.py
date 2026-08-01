@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from datetime import datetime
-
+import numpy as np
 
 class LearningManager:
     """
@@ -113,11 +113,22 @@ class LearningManager:
 
             # Save to disk
             with open(self.learning_file, "w", encoding="utf-8") as file:
+                def json_converter(obj):
+                    if isinstance(obj, np.integer):
+                        return int(obj)
+                    if isinstance(obj, np.floating):
+                        return float(obj)
+                    if isinstance(obj, np.bool_):
+                        return bool(obj)
+                    raise TypeError(f"{type(obj)} is not JSON serializable")
+
+
                 json.dump(
                     self.learning_data,
                     file,
                     indent=4,
-                    ensure_ascii=False
+                    ensure_ascii=False,
+                    default=json_converter
                 )
 
         except Exception as error:
