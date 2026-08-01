@@ -1,16 +1,21 @@
 #  VOLTERA
 
+<p align="center">
+  <img src="assets/banner.png" alt="VOLTERA Banner"/>
+</p>
+
 <div align="center">
 
 ### AI-Powered Battery Intelligence Platform
 
-**Monitor • Analyze • Learn • Predict • Adapt**
+**An Intelligent Battery Assistant that Monitors, Learns, Predicts, and Adapts to Your Usage Patterns**
 
-![Python](https://img.shields.io/badge/Python-3.13+-blue?style=for-the-badge&logo=python)
-![Status](https://img.shields.io/badge/Status-Active%20Development-success?style=for-the-badge)
-![Version](https://img.shields.io/badge/Version-Sprint%2011-orange?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![AI](https://img.shields.io/badge/Artificial-Intelligence-blueviolet?style=for-the-badge)
+![Machine Learning](https://img.shields.io/badge/Machine-Learning-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Sprint](https://img.shields.io/badge/Sprint-11-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
 </div>
 
 ---
@@ -230,6 +235,26 @@ VOLTERA/
 | Git & GitHub | Version control |
 
 ---
+
+---
+
+#  GitHub Statistics
+
+<p align="center">
+
+<img height="180em" src="https://github-readme-stats.vercel.app/api?username=kaashif087&show_icons=true&theme=tokyonight"/>
+
+<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaashif087&layout=compact&theme=tokyonight"/>
+
+</p>
+
+#  GitHub Streak
+
+<p align="center">
+
+<img src="https://streak-stats.demolab.com?user=kaashif087&theme=tokyonight"/>
+
+</p>
 
 # ⚙️ Installation
 
@@ -541,6 +566,23 @@ Planned modules:
 
 ---
 
+---
+
+#  Project Metrics
+
+| Metric | Value |
+|----------|-------|
+| Current Version | Sprint 11 |
+| Sprints Completed | 10 |
+| Sprint In Progress | 11 |
+| Major Modules | 8+ |
+| Python Files | 40+ |
+| Test Suites | 10+ |
+| Machine Learning Models | 1 |
+| Programming Language | Python |
+| Development Methodology | Sprint Based |
+| Status | Active Development |
+
 #  Current Capabilities
 
 VOLTERA can currently:
@@ -564,6 +606,29 @@ The next milestone is enabling VOLTERA to make adaptive decisions based on every
 
 
 ---
+
+---
+
+#  Skills Demonstrated
+
+This project showcases practical experience in:
+
+-  Python Programming
+-  Object-Oriented Programming (OOP)
+-  Artificial Intelligence
+-  Machine Learning
+-  Data Analysis
+-  Predictive Analytics
+-  Battery Intelligence
+-  System Monitoring
+-  Desktop Notifications
+-  Personalization Systems
+-  Adaptive Intelligence
+-  JSON & CSV Data Management
+-  Test-Driven Development (TDD)
+-  Git & GitHub
+-  Software Architecture
+-  Modular Software Design
 
 #  Future Roadmap
 
@@ -613,17 +678,28 @@ This project is licensed under the **MIT License**.
 
 ---
 
-#  Author
+##  Author
 
-**Kaashif Mohammad**
+## Kaashif Mohammad
 
 B.Tech – Computer Science & Engineering
 
-Passionate about Artificial Intelligence, Machine Learning, Software Engineering, and Intelligent Systems.
+Passionate about:
 
-GitHub:
-https://github.com/kaashif087
+- Artificial Intelligence
+- Machine Learning
+- Python Development
+- Software Engineering
+- Intelligent Systems
+- Battery Intelligence
+- Data Analytics
 
+### Connect with Me
+
+- **GitHub:** https://github.com/kaashif087
+- **LinkedIn:** https://www.linkedin.com/in/kaashif-mohammad-b26697385
+
+> *"Building intelligent software that learns, predicts, and adapts."*
 ---
 
 #  Long-Term Vision
