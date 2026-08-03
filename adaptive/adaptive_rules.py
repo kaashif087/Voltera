@@ -222,7 +222,9 @@ class AdaptiveRules:
 
     def __str__(self):
         return (
-            f"[{self.priority}] "
-            f"{self.title} - "
-            f"{self.message}"
+            f"[{self.priority}] {self.title}\n"
+            f"Message : {self.message}\n"
+            f"Reason  : {self.reason}\n"
+            f"Action  : {self.action}\n"
+            f"Confidence : {self.confidence:.2f}"
         )
