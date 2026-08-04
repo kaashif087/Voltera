@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from adaptive.adaptive_engine import AdaptiveEngine
+
 from recommendation.prediction_rules import (
     assess_prediction_state,
     get_prediction_recommendation
@@ -144,3 +148,48 @@ def generate_recommendation(battery_context):
         )
 
     return recommendation
+
+def generate_adaptive_recommendations(battery_context):
+    """
+    Generate personalized recommendations using
+    Sprint 11 Adaptive Intelligence.
+    """
+
+    engine = AdaptiveEngine()
+
+    result = engine.evaluate(
+        battery=battery_context["battery_percentage"],
+        current_hour=datetime.now().hour,
+
+        # Temporary placeholders.
+        # These will become dynamic later.
+        current_drain=7,
+        application="Unknown"
+    )
+
+    return result["recommendations"]
+
+def generate_complete_recommendations(battery_context):
+    """
+    Generate both static and adaptive recommendations.
+
+    Returns:
+        list
+    """
+
+    recommendations = []
+
+    static = generate_recommendation(
+        battery_context
+    )
+
+    if static:
+        recommendations.append(static)
+
+    adaptive = generate_adaptive_recommendations(
+        battery_context
+    )
+
+    recommendations.extend(adaptive)
+
+    return recommendations
