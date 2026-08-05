@@ -1,0 +1,29 @@
+{
+    "device": {
+        "battery": null,
+        "charging": false,
+        "cpu": null,
+        "ram": null
+    },
+    "screen": {
+        "state": "ON",
+        "on_duration": 0,
+        "off_duration": 0
+    },
+    "sleep": {
+        "sleeping": false,
+        "sleep_duration": 0
+    },
+    "application": {
+        "active_app": null,
+        "category": null
+    },
+    "network": {
+        "wifi": false,
+        "ethernet": false,
+        "internet": false
+    },
+    "power": {
+        "charger_connected": false
+    }
+}
