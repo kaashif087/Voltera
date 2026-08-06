@@ -59,3 +59,57 @@ class ContextManager:
             def save_context(self):
                     with open(self.context_file, "w", encoding="utf-8") as file:
                         json.dump(self.context, file, indent=4)
+
+            def update_context(self, section, key, value):
+                    """
+                    Update a specific value in the context.
+
+                    Returns:
+                        bool: True if update succeeds, False otherwise.
+                    """
+                    if section not in self.context:
+                        return False
+
+                    if key not in self.context[section]:
+                        return False
+
+                    self.context[section][key] = value
+                    self.save_context()
+                    return True
+
+            def get_context(self):
+                """
+                Return the complete context.
+                """
+                return self.context
+
+            def get_section(self, section):
+                """
+                Return a specific context section.
+
+                Returns:
+                    dict | None
+                """
+                return self.context.get(section)
+
+            def reset_context(self):
+                """
+                Reset the context to its default values.
+                """
+                self.context = copy.deepcopy(DEFAULT_CONTEXT)
+                self.save_context()
+
+            def section_exists(self, section):
+                """
+                Check whether a section exists.
+                """
+                return section in self.context
+
+            def key_exists(self, section, key):
+                """
+                Check whether a key exists within a section.
+                """
+                if section not in self.context:
+                    return False
+
+                return key in self.context[section]

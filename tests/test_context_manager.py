@@ -3,29 +3,30 @@ from context.context_manager import ContextManager, DEFAULT_CONTEXT
 
 def print_result(test_name, passed):
     status = "PASS" if passed else "FAIL"
-    print(f"{test_name:<35} -> {status}")
+    print(f"{test_name:<40} -> {status}")
 
 
 def run_tests():
-    print("=" * 60)
+    print("=" * 65)
     print("VOLTERA Context Manager Test Suite")
-    print("=" * 60)
+    print("=" * 65)
 
     manager = ContextManager()
 
-    # Test 1: Context file created
+    # --------------------------------------------------------
+    # Persistence Tests
+    # --------------------------------------------------------
+
     print_result(
         "Context File Creation",
         manager.context_file.exists()
     )
 
-    # Test 2: Context loaded
     print_result(
         "Load Context",
         isinstance(manager.context, dict)
     )
 
-    # Test 3: Default sections exist
     expected_sections = [
         "device",
         "screen",
@@ -45,13 +46,11 @@ def run_tests():
         sections_exist
     )
 
-    # Test 4: Context matches default structure
     print_result(
         "Default Context Structure",
         manager.context == DEFAULT_CONTEXT
     )
 
-    # Test 5: Save Context
     try:
         manager.save_context()
         passed = True
@@ -63,7 +62,85 @@ def run_tests():
         passed
     )
 
-    print("=" * 60)
+    # --------------------------------------------------------
+    # API Tests
+    # --------------------------------------------------------
+
+    result = manager.update_context(
+        "device",
+        "battery",
+        75
+    )
+
+    print_result(
+        "Update Context",
+        result and manager.context["device"]["battery"] == 75
+    )
+
+    context = manager.get_context()
+
+    print_result(
+        "Get Context",
+        isinstance(context, dict)
+    )
+
+    device = manager.get_section("device")
+
+    print_result(
+        "Get Section",
+        isinstance(device, dict)
+    )
+
+    manager.reset_context()
+
+    print_result(
+        "Reset Context",
+        manager.context == DEFAULT_CONTEXT
+    )
+
+    print_result(
+        "Section Exists",
+        manager.section_exists("device")
+    )
+
+    print_result(
+        "Section Does Not Exist",
+        not manager.section_exists("invalid")
+    )
+
+    print_result(
+        "Key Exists",
+        manager.key_exists("device", "battery")
+    )
+
+    print_result(
+        "Key Does Not Exist",
+        not manager.key_exists("device", "invalid")
+    )
+
+    result = manager.update_context(
+        "invalid",
+        "battery",
+        50
+    )
+
+    print_result(
+        "Invalid Section Update",
+        result is False
+    )
+
+    result = manager.update_context(
+        "device",
+        "invalid",
+        50
+    )
+
+    print_result(
+        "Invalid Key Update",
+        result is False
+    )
+
+    print("=" * 65)
 
 
 if __name__ == "__main__":
