@@ -63,6 +63,44 @@ def run_tests():
         screen["off_duration"] == 0
     )
 
+    # --------------------------------------------------
+    # Reset
+    # --------------------------------------------------
+
+    screen_monitor.reset()
+
+    print_result(
+        "Reset Screen State",
+        screen_monitor.get_screen_state() == "ON"
+    )
+
+    print_result(
+        "Reset ON Duration",
+        screen_monitor.get_screen_on_duration() == 0
+    )
+
+    print_result(
+        "Reset OFF Duration",
+        screen_monitor.get_screen_off_duration() == 0
+    )
+
+    screen = context_manager.get_section("screen")
+
+    print_result(
+        "Reset Context State",
+        screen["state"] == "ON"
+    )
+
+    print_result(
+        "Reset Context ON Duration",
+        screen["on_duration"] == 0
+    )
+
+    print_result(
+        "Reset Context OFF Duration",
+        screen["off_duration"] == 0
+    )
+
     print("=" * 65)
 
 

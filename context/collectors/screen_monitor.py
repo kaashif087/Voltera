@@ -59,30 +59,91 @@ class ScreenMonitor:
         except Exception:
             return self.screen_state
 
-    def _handle_state_change(self, new_state):
+    def _update_duration(self, current_time=None):
+        """
+        Update the duration of the current screen state.
+
+        Args:
+            current_time (datetime, optional):
+                Current timestamp. Mainly useful for deterministic testing.
+        """
+
+        if current_time is None:
+            current_time = datetime.now()
+
+        elapsed_seconds = (
+            current_time - self.last_state_change
+        ).total_seconds()
+
+        if elapsed_seconds < 0:
+            elapsed_seconds = 0
+
+        if self.screen_state == "ON":
+            self.screen_on_duration += elapsed_seconds
+        else:
+            self.screen_off_duration += elapsed_seconds
+
+        self.last_state_change = current_time
+
+    def _handle_state_change(self, new_state, current_time=None):
         """
         Handle a detected screen state transition.
 
         Args:
-            new_state (str): Newly detected screen state.
+            new_state (str):
+                Newly detected screen state.
+
+            current_time (datetime, optional):
+                Timestamp used for the transition.
         """
+
+        if current_time is None:
+            current_time = datetime.now()
 
         if new_state == self.screen_state:
             return
 
+        self._update_duration(current_time)
+
         self.screen_state = new_state
-        self.last_state_change = datetime.now()
 
-    def refresh(self):
-        """
-        Refresh the screen state.
+        self.last_state_change = current_time
 
-        Detects the current state and processes any state transition.
+    def refresh(self, current_time=None):
         """
+        Refresh the screen state and update duration information.
+
+        Args:
+            current_time (datetime, optional):
+                Timestamp used for deterministic testing.
+        """
+
+        if current_time is None:
+            current_time = datetime.now()
 
         detected_state = self._detect_screen_state()
 
-        self._handle_state_change(detected_state)
+        if detected_state != self.screen_state:
+            self._handle_state_change(
+                detected_state,
+                current_time
+            )
+        else:
+            self._update_duration(current_time)
+
+        self.update_context()
+
+
+    def reset(self):
+        """
+        Reset the Screen Monitor to its initial state.
+        """
+
+        self.screen_state = "ON"
+        self.last_state_change = datetime.now()
+
+        self.screen_on_duration = 0
+        self.screen_off_duration = 0
 
         self.update_context()
 
