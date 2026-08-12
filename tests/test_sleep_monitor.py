@@ -1,21 +1,28 @@
 from datetime import timedelta
+
 from context.context_manager import ContextManager
 from context.collectors.sleep_monitor import SleepMonitor
+from context.collectors.windows_sleep_detector import WindowsSleepDetector
 
 
 def print_result(test_name, passed):
     status = "PASS" if passed else "FAIL"
-    print(f"{test_name:<45} -> {status}")
+    print(f"{test_name:<50} -> {status}")
 
 
 def run_tests():
-    print("=" * 70)
+    print("=" * 75)
     print("VOLTERA Sleep Monitor Test Suite")
-    print("=" * 70)
+    print("=" * 75)
 
     context_manager = ContextManager()
 
-    sleep_monitor = SleepMonitor(context_manager)
+    detector = WindowsSleepDetector()
+
+    sleep_monitor = SleepMonitor(
+        context_manager,
+        detector=detector
+    )
 
     # --------------------------------------------------
     # Initialization
@@ -54,9 +61,9 @@ def run_tests():
         sleep["sleep_duration"] == 0
     )
 
-    print("=" * 70)
+    print("=" * 75)
 
-        # --------------------------------------------------
+    # --------------------------------------------------
     # State Transition
     # --------------------------------------------------
 
@@ -88,8 +95,7 @@ def run_tests():
         sleep_monitor.get_sleep_state() is False
     )
 
-
-        # --------------------------------------------------
+    # --------------------------------------------------
     # Sleep Duration
     # --------------------------------------------------
 
@@ -129,8 +135,7 @@ def run_tests():
         sleep_monitor.get_sleep_duration() == 300
     )
 
-
-        # --------------------------------------------------
+    # --------------------------------------------------
     # Reset
     # --------------------------------------------------
 
@@ -157,6 +162,44 @@ def run_tests():
         "Reset Context Sleep Duration",
         sleep["sleep_duration"] == 0
     )
+
+    # --------------------------------------------------
+    # Windows Detector Integration
+    # --------------------------------------------------
+
+    detector.handle_power_event(
+        detector.PBT_APMSUSPEND
+    )
+
+    print_result(
+        "Detector -> SleepMonitor Sleep State",
+        sleep_monitor.get_sleep_state() is True
+    )
+
+    sleep = context_manager.get_section("sleep")
+
+    print_result(
+        "Detector -> Context Sleep State",
+        sleep["sleeping"] is True
+    )
+
+    detector.handle_power_event(
+        detector.PBT_APMRESUMEAUTOMATIC
+    )
+
+    print_result(
+        "Detector -> SleepMonitor Wake State",
+        sleep_monitor.get_sleep_state() is False
+    )
+
+    sleep = context_manager.get_section("sleep")
+
+    print_result(
+        "Detector -> Context Wake State",
+        sleep["sleeping"] is False
+    )
+
+    print("=" * 75)
 
 
 if __name__ == "__main__":

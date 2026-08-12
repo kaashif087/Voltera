@@ -1,12 +1,12 @@
 from datetime import datetime
-
+from context.collectors.windows_sleep_detector import WindowsSleepDetector
 
 class SleepMonitor:
     """
     Monitors system sleep and wake state.
     """
 
-    def __init__(self, context_manager):
+    def __init__(self, context_manager,detector=None):
         """
         Initialize the Sleep Monitor.
 
@@ -23,6 +23,28 @@ class SleepMonitor:
 
         self.sleep_duration = 0
 
+        if detector is None:
+            self.detector = WindowsSleepDetector(
+                callback=self._on_sleep_state_change
+            )
+        else:
+            self.detector = detector
+            self.detector.callback = self._on_sleep_state_change
+
+    def _on_sleep_state_change(self, sleeping):
+        """
+        Handle a sleep/wake event received from the platform detector.
+
+        Args:
+            sleeping (bool):
+                True when the system enters sleep,
+                False when the system resumes.
+        """
+
+        self._handle_state_change(sleeping)
+
+        self.update_context()
+
     def _detect_sleep_state(self):
         """
         Detect the current system sleep state.
@@ -36,8 +58,7 @@ class SleepMonitor:
             independent from the platform-specific detection logic.
         """
 
-        return self.sleeping
-
+        return self.detector.get_sleep_state()
     def _update_duration(self, current_time=None):
         """
         Update sleep duration when the device is sleeping.
