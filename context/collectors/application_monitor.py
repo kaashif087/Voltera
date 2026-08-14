@@ -12,6 +12,9 @@ class ApplicationMonitor:
         self.user32 = ctypes.windll.user32
         self.kernel32 = ctypes.windll.kernel32
 
+        self.current_application = None
+        self.previous_application = None
+
     def get_active_window(self):
         """Return the handle of the current foreground window."""
         return self.user32.GetForegroundWindow()
@@ -42,7 +45,6 @@ class ApplicationMonitor:
         try:
             buffer_size = 260
             buffer = ctypes.create_unicode_buffer(buffer_size)
-
             length = wintypes.DWORD(buffer_size)
 
             success = self.kernel32.QueryFullProcessImageNameW(
@@ -64,6 +66,7 @@ class ApplicationMonitor:
 
     def get_window_title(self, window_handle):
         """Return the title of a window."""
+
         length = self.user32.GetWindowTextLengthW(window_handle)
 
         if length == 0:
@@ -80,7 +83,12 @@ class ApplicationMonitor:
         return buffer.value
 
     def get_active_application(self):
-        """Return information about the currently active application."""
+        """
+        Detect and return the currently active application.
+
+        The detected application becomes the current application,
+        while the previous current application is stored as previous.
+        """
 
         window_handle = self.get_active_window()
 
@@ -91,9 +99,37 @@ class ApplicationMonitor:
         process_name = self.get_process_name(process_id)
         window_title = self.get_window_title(window_handle)
 
-        return {
+        application = {
             "window_handle": window_handle,
             "process_id": process_id,
             "process_name": process_name,
             "window_title": window_title,
         }
+
+        self.previous_application = self.current_application
+        self.current_application = application
+
+        return application
+
+    def has_application_changed(self):
+        """
+        Return True if the current application differs from
+        the previous application.
+        """
+
+        if self.previous_application is None:
+            return False
+
+        if self.current_application is None:
+            return False
+
+        return (
+            self.previous_application["process_id"]
+            != self.current_application["process_id"]
+        )
+
+    def reset(self):
+        """Reset application tracking state."""
+
+        self.current_application = None
+        self.previous_application = None
