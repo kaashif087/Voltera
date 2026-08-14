@@ -20,6 +20,12 @@ def test_application_monitor():
     assert result["process_id"] > 0
     print("Process ID Valid                  -> PASS")
 
+    assert result["process_name"]
+    print("Process Name Retrieved            -> PASS")
+
+    assert isinstance(result["process_name"], str)
+    print("Process Name Valid                -> PASS")
+
     assert isinstance(result["window_title"], str)
     print("Window Title Retrieved            -> PASS")
 
@@ -28,6 +34,7 @@ def test_application_monitor():
     print("----------------------------------------")
     print(f"Window Handle : {result['window_handle']}")
     print(f"Process ID    : {result['process_id']}")
+    print(f"Process Name  : {result['process_name']}")
     print(f"Window Title  : {result['window_title']}")
 
     print("\n========================================")

@@ -5,6 +5,9 @@ from ctypes import wintypes
 class ApplicationMonitor:
     """Monitors the currently active Windows application."""
 
+    PROCESS_QUERY_INFORMATION = 0x0400
+    PROCESS_VM_READ = 0x0010
+
     def __init__(self):
         self.user32 = ctypes.windll.user32
         self.kernel32 = ctypes.windll.kernel32
@@ -23,6 +26,41 @@ class ApplicationMonitor:
         )
 
         return process_id.value
+
+    def get_process_name(self, process_id):
+        """Return the executable name associated with a process."""
+
+        process_handle = self.kernel32.OpenProcess(
+            self.PROCESS_QUERY_INFORMATION | self.PROCESS_VM_READ,
+            False,
+            process_id
+        )
+
+        if not process_handle:
+            return ""
+
+        try:
+            buffer_size = 260
+            buffer = ctypes.create_unicode_buffer(buffer_size)
+
+            length = wintypes.DWORD(buffer_size)
+
+            success = self.kernel32.QueryFullProcessImageNameW(
+                process_handle,
+                0,
+                buffer,
+                ctypes.byref(length)
+            )
+
+            if not success:
+                return ""
+
+            full_path = buffer.value
+
+            return full_path.rsplit("\\", 1)[-1]
+
+        finally:
+            self.kernel32.CloseHandle(process_handle)
 
     def get_window_title(self, window_handle):
         """Return the title of a window."""
@@ -50,10 +88,12 @@ class ApplicationMonitor:
             return None
 
         process_id = self.get_process_id(window_handle)
+        process_name = self.get_process_name(process_id)
         window_title = self.get_window_title(window_handle)
 
         return {
             "window_handle": window_handle,
             "process_id": process_id,
+            "process_name": process_name,
             "window_title": window_title,
         }
