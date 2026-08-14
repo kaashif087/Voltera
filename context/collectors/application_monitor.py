@@ -1,4 +1,5 @@
 import ctypes
+import time
 from ctypes import wintypes
 
 
@@ -14,6 +15,7 @@ class ApplicationMonitor:
 
         self.current_application = None
         self.previous_application = None
+        self.session_start_time = None
 
     def get_active_window(self):
         """Return the handle of the current foreground window."""
@@ -86,8 +88,10 @@ class ApplicationMonitor:
         """
         Detect and return the currently active application.
 
-        The detected application becomes the current application,
-        while the previous current application is stored as previous.
+        The first detected application starts a usage session.
+
+        If the process changes, the previous session ends and
+        a new session starts.
         """
 
         window_handle = self.get_active_window()
@@ -106,8 +110,19 @@ class ApplicationMonitor:
             "window_title": window_title,
         }
 
+        application_changed = False
+
+        if (
+            self.current_application is not None
+            and self.current_application["process_id"] != process_id
+        ):
+            application_changed = True
+
         self.previous_application = self.current_application
         self.current_application = application
+
+        if self.session_start_time is None or application_changed:
+            self.session_start_time = time.monotonic()
 
         return application
 
@@ -128,8 +143,17 @@ class ApplicationMonitor:
             != self.current_application["process_id"]
         )
 
+    def get_usage_duration(self):
+        """Return the current application's usage duration in seconds."""
+
+        if self.session_start_time is None:
+            return 0.0
+
+        return time.monotonic() - self.session_start_time
+
     def reset(self):
-        """Reset application tracking state."""
+        """Reset application tracking and usage state."""
 
         self.current_application = None
         self.previous_application = None
+        self.session_start_time = None

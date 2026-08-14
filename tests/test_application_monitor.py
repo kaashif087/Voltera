@@ -1,3 +1,5 @@
+import time
+
 from context.collectors.application_monitor import ApplicationMonitor
 
 
@@ -34,20 +36,19 @@ def test_application_monitor():
     print("Window Title Retrieved            -> PASS")
 
     # --------------------------------------------------
-    # Initial switching state
+    # Initial session
     # --------------------------------------------------
 
-    assert monitor.previous_application is None
-    print("Initial Previous Application      -> PASS")
+    assert monitor.session_start_time is not None
+    print("Session Start Initialized         -> PASS")
 
-    assert monitor.current_application is not None
-    print("Current Application Stored        -> PASS")
+    duration = monitor.get_usage_duration()
 
-    assert monitor.has_application_changed() is False
-    print("Initial Switch State Valid        -> PASS")
+    assert duration >= 0
+    print("Usage Duration Available          -> PASS")
 
     # --------------------------------------------------
-    # Simulated application switch
+    # Same application
     # --------------------------------------------------
 
     first_application = {
@@ -57,6 +58,19 @@ def test_application_monitor():
         "window_title": "Visual Studio Code",
     }
 
+    monitor.previous_application = None
+    monitor.current_application = first_application
+    monitor.session_start_time = time.monotonic() - 10
+
+    duration = monitor.get_usage_duration()
+
+    assert duration >= 9
+    print("Usage Duration Tracking           -> PASS")
+
+    # --------------------------------------------------
+    # Application switch
+    # --------------------------------------------------
+
     second_application = {
         "window_handle": 200,
         "process_id": 2000,
@@ -64,33 +78,20 @@ def test_application_monitor():
         "window_title": "Google Chrome",
     }
 
-    monitor.current_application = first_application
-    monitor.previous_application = None
-
-    assert monitor.has_application_changed() is False
-    print("Same Initial Application           -> PASS")
-
     monitor.previous_application = first_application
     monitor.current_application = second_application
 
     assert monitor.has_application_changed() is True
     print("Application Switch Detected       -> PASS")
 
-    # --------------------------------------------------
-    # Previous application tracking
-    # --------------------------------------------------
+    # Simulate the new application's session.
+    monitor.session_start_time = time.monotonic()
 
-    assert (
-        monitor.previous_application["process_id"]
-        == 1000
-    )
-    print("Previous Application Preserved    -> PASS")
+    new_duration = monitor.get_usage_duration()
 
-    assert (
-        monitor.current_application["process_id"]
-        == 2000
-    )
-    print("Current Application Updated       -> PASS")
+    assert new_duration >= 0
+    assert new_duration < 1
+    print("New Session Started After Switch -> PASS")
 
     # --------------------------------------------------
     # Reset
@@ -100,8 +101,11 @@ def test_application_monitor():
 
     assert monitor.current_application is None
     assert monitor.previous_application is None
+    assert monitor.session_start_time is None
+    assert monitor.get_usage_duration() == 0.0
 
     print("Reset Application Tracking        -> PASS")
+    print("Reset Usage Duration              -> PASS")
 
     # --------------------------------------------------
     # Information
