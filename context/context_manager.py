@@ -20,7 +20,10 @@ DEFAULT_CONTEXT = {
     },
     "application": {
         "active_app": None,
-        "category": None
+        "process_id": None,
+        "category": None,
+        "window_title": None,
+        "usage_duration": 0
     },
     "network": {
         "wifi": False,
