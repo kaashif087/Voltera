@@ -2,9 +2,55 @@ from context.context_manager import ContextManager
 from context.application_context import ApplicationContext
 
 
-def test_application_context():
+class MockApplicationMonitor:
+    """Deterministic application monitor for integration testing."""
+
+    def __init__(self):
+        self.current_application = None
+        self.previous_application = None
+        self.session_start_time = None
+
+        self.application = {
+            "window_handle": 100,
+            "process_id": 10848,
+            "process_name": "Code.exe",
+            "window_title": "test_application_monitor.py - Voltera - Visual Studio Code",
+        }
+
+        self.duration = 10.0
+
+    def get_active_application(self):
+        self.previous_application = self.current_application
+        self.current_application = self.application.copy()
+        return self.current_application
+
+    def get_usage_duration(self):
+        return self.duration
+
+    def reset(self):
+        self.current_application = None
+        self.previous_application = None
+        self.session_start_time = None
+
+    def switch_application(
+        self,
+        process_id,
+        process_name,
+        window_title
+    ):
+        self.previous_application = self.current_application
+
+        self.application = {
+            "window_handle": process_id,
+            "process_id": process_id,
+            "process_name": process_name,
+            "window_title": window_title,
+        }
+
+
+def test_application_context_continuous_updates():
     print("\n========================================")
-    print("Application Context Test Suite")
+    print("Application Context Continuous Update Test")
     print("========================================")
 
     # --------------------------------------------------
@@ -14,55 +60,109 @@ def test_application_context():
     context_manager = ContextManager()
     context_manager.reset_context()
 
+    monitor = MockApplicationMonitor()
+
     application_context = ApplicationContext(
-        context_manager=context_manager
+        context_manager=context_manager,
+        monitor=monitor
     )
 
-    print("Application Context Created       -> PASS")
+    print("Continuous Update Environment Created -> PASS")
 
     # --------------------------------------------------
-    # Update application context
+    # Initial application: VS Code
     # --------------------------------------------------
 
     result = application_context.update()
 
-    assert result is not None
-    print("Application Context Updated       -> PASS")
+    assert result["active_app"] == "Code.exe"
+    print("Initial Application Detected          -> PASS")
+
+    assert result["process_id"] == 10848
+    print("Initial Process ID Stored             -> PASS")
+
+    assert result["category"] == "Development"
+    print("Initial Category Classified           -> PASS")
+
+    assert result["window_title"] == (
+        "test_application_monitor.py - Voltera - Visual Studio Code"
+    )
+    print("Initial Window Title Stored           -> PASS")
+
+    assert result["usage_duration"] == 10.0
+    print("Initial Usage Duration Stored         -> PASS")
 
     # --------------------------------------------------
-    # Active application
+    # Same application update
     # --------------------------------------------------
 
-    assert result["active_app"]
-    print("Active Application Stored         -> PASS")
+    monitor.duration = 25.0
+
+    result = application_context.update()
+
+    assert result["active_app"] == "Code.exe"
+    assert result["category"] == "Development"
+    assert result["usage_duration"] == 25.0
+
+    print("Same Application Context Updated      -> PASS")
 
     # --------------------------------------------------
-    # Process ID
+    # Switch to Chrome
     # --------------------------------------------------
 
-    assert result["process_id"] > 0
-    print("Process ID Stored                 -> PASS")
+    monitor.switch_application(
+        process_id=22000,
+        process_name="chrome.exe",
+        window_title="Google Chrome"
+    )
+
+    monitor.duration = 3.0
+
+    result = application_context.update()
+
+    assert result["active_app"] == "chrome.exe"
+    print("Application Switch Detected           -> PASS")
+
+    assert result["process_id"] == 22000
+    print("New Process ID Stored                 -> PASS")
+
+    assert result["category"] == "Browsing"
+    print("New Application Classified             -> PASS")
+
+    assert result["window_title"] == "Google Chrome"
+    print("New Window Title Stored                -> PASS")
+
+    assert result["usage_duration"] == 3.0
+    print("New Usage Session Stored               -> PASS")
 
     # --------------------------------------------------
-    # Classification
+    # Switch back to VS Code
     # --------------------------------------------------
 
-    assert result["category"]
-    print("Application Category Stored      -> PASS")
+    monitor.switch_application(
+        process_id=10848,
+        process_name="Code.exe",
+        window_title="Voltera - Visual Studio Code"
+    )
 
-    # --------------------------------------------------
-    # Window title
-    # --------------------------------------------------
+    monitor.duration = 7.0
 
-    assert isinstance(result["window_title"], str)
-    print("Window Title Stored               -> PASS")
+    result = application_context.update()
 
-    # --------------------------------------------------
-    # Usage duration
-    # --------------------------------------------------
+    assert result["active_app"] == "Code.exe"
+    print("Return Application Detected            -> PASS")
 
-    assert result["usage_duration"] >= 0
-    print("Usage Duration Stored             -> PASS")
+    assert result["process_id"] == 10848
+    print("Return Process ID Stored               -> PASS")
+
+    assert result["category"] == "Development"
+    print("Return Application Classified           -> PASS")
+
+    assert result["window_title"] == "Voltera - Visual Studio Code"
+    print("Return Window Title Stored              -> PASS")
+
+    assert result["usage_duration"] == 7.0
+    print("Return Usage Session Stored             -> PASS")
 
     # --------------------------------------------------
     # ContextManager synchronization
@@ -71,16 +171,7 @@ def test_application_context():
     stored_context = context_manager.get_section("application")
 
     assert stored_context == result
-    print("Context Manager Synchronization  -> PASS")
-
-    # --------------------------------------------------
-    # Context retrieval
-    # --------------------------------------------------
-
-    retrieved_context = application_context.get_context()
-
-    assert retrieved_context == result
-    print("Application Context Retrieval    -> PASS")
+    print("Final Context Synchronization          -> PASS")
 
     # --------------------------------------------------
     # Reset
@@ -96,21 +187,12 @@ def test_application_context():
     assert reset_context["window_title"] is None
     assert reset_context["usage_duration"] == 0
 
-    print("Application Context Reset        -> PASS")
-
-    print("\n----------------------------------------")
-    print("Application Context Information")
-    print("----------------------------------------")
-    print(f"Active App      : {result['active_app']}")
-    print(f"Process ID      : {result['process_id']}")
-    print(f"Category        : {result['category']}")
-    print(f"Window Title    : {result['window_title']}")
-    print(f"Usage Duration  : {result['usage_duration']:.2f}s")
+    print("Continuous Application Context Reset  -> PASS")
 
     print("\n========================================")
-    print("Application Context Tests -> ALL PASS")
+    print("Application Context Continuous Tests -> ALL PASS")
     print("========================================")
 
 
 if __name__ == "__main__":
-    test_application_context()
+    test_application_context_continuous_updates()
