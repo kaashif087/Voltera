@@ -141,6 +141,44 @@ def test_network_state_change_detection():
     print(f"Current State                       -> {result['current']}")
     print(f"State Changed                       -> {result['changed']}")
 
+def test_context_manager_integration():
+    from context.context_manager import ContextManager
+
+    monitor = NetworkMonitor()
+    context_manager = ContextManager()
+
+    network_state = monitor.update_context(context_manager)
+
+    assert isinstance(network_state, dict)
+
+    assert context_manager.get_context("network", "wifi") == network_state["wifi"]
+    assert context_manager.get_context("network", "ethernet") == network_state["ethernet"]
+    assert context_manager.get_context("network", "internet") == network_state["internet"]
+
+    print("ContextManager Integration         -> PASS")
+    print(f"Network Context                    -> {network_state}")
+
+def test_context_manager_integration():
+    from context.context_manager import ContextManager
+
+    monitor = NetworkMonitor()
+    context_manager = ContextManager()
+
+    network_state = monitor.update_context(context_manager)
+
+    assert isinstance(network_state, dict)
+
+    context = context_manager.get_context()
+    network_context = context["network"]
+
+    assert network_context["wifi"] == network_state["wifi"]
+    assert network_context["ethernet"] == network_state["ethernet"]
+    assert network_context["internet"] == network_state["internet"]
+
+    print("ContextManager Integration         -> PASS")
+    print(f"Network Context                    -> {network_context}")
+
+    context_manager.reset_context()
 if __name__ == "__main__":
     test_network_monitor_creation()
     test_interfaces_initial_state()
@@ -152,5 +190,6 @@ if __name__ == "__main__":
     test_network_state_collection()
     test_network_state_tracking()
     test_network_state_change_detection()
+    test_context_manager_integration()
 
-    print("\nPhase 4A.5 Network State Change Tests Complete")
+    print("\nPhase 4A.6 Network Context Integration Tests Complete")

@@ -80,3 +80,26 @@ class NetworkMonitor:
             "changed": previous_state is not None
             and previous_state != current_state,
         }
+
+    def update_context(self, context_manager):
+        network_state = self.get_network_state()
+
+        context_manager.update_section("network", network_state)
+
+        return network_state
+
+    def update_context(self, context_manager):
+        network_state = self.get_network_state()
+
+        for key, value in network_state.items():
+            context_manager.update_context("network", key, value)
+
+        return network_state
+
+    def update_context(self, context_manager):
+        network_state = self.get_network_state()
+
+        for key, value in network_state.items():
+            context_manager.update_context("network", key, value)
+
+        return network_state
