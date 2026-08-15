@@ -26,3 +26,20 @@ class NetworkMonitor:
                     return True
 
         return False
+
+    def is_ethernet_connected(self):
+        if not self._interfaces:
+            self.collect()
+
+        stats = psutil.net_if_stats()
+
+        for interface_name, addresses in self._interfaces.items():
+            name = interface_name.lower()
+
+            if "ethernet" in name:
+                interface_stats = stats.get(interface_name)
+
+                if interface_stats and interface_stats.isup:
+                    return True
+
+        return False

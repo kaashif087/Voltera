@@ -52,11 +52,24 @@ def test_wifi_detection():
     print(f"Wi-Fi Connected                    -> {wifi_connected}")
 
 
+def test_ethernet_detection():
+    monitor = NetworkMonitor()
+
+    monitor.collect()
+
+    ethernet_connected = monitor.is_ethernet_connected()
+
+    assert isinstance(ethernet_connected, bool)
+
+    print("Ethernet Detection                 -> PASS")
+    print(f"Ethernet Connected                 -> {ethernet_connected}")
+
 if __name__ == "__main__":
     test_network_monitor_creation()
     test_interfaces_initial_state()
     test_collect_interfaces()
     test_get_interfaces_after_collection()
     test_wifi_detection()
+    test_ethernet_detection()
 
-    print("\nPhase 4A.2 Wi-Fi Detection Tests Complete")
+    print("\nPhase 4A.3 Ethernet Detection Tests Complete")
