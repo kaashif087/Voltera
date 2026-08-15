@@ -59,3 +59,24 @@ class NetworkMonitor:
                 continue
 
         return False
+
+    def get_network_state(self):
+        return {
+            "wifi": self.is_wifi_connected(),
+            "ethernet": self.is_ethernet_connected(),
+            "internet": self.is_internet_connected(),
+        }
+
+    def update_state(self):
+        current_state = self.get_network_state()
+
+        previous_state = getattr(self, "_previous_state", None)
+
+        self._previous_state = current_state.copy()
+
+        return {
+            "previous": previous_state,
+            "current": current_state,
+            "changed": previous_state is not None
+            and previous_state != current_state,
+        }

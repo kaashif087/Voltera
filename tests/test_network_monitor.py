@@ -75,6 +75,42 @@ def test_internet_detection():
     print("Internet Detection                  -> PASS")
     print(f"Internet Connected                  -> {internet_connected}")
 
+def test_network_state_collection():
+    monitor = NetworkMonitor()
+
+    state = monitor.get_network_state()
+
+    assert isinstance(state, dict)
+    assert "wifi" in state
+    assert "ethernet" in state
+    assert "internet" in state
+
+    assert isinstance(state["wifi"], bool)
+    assert isinstance(state["ethernet"], bool)
+    assert isinstance(state["internet"], bool)
+
+    print("Network State Collection            -> PASS")
+    print(f"Current Network State               -> {state}")
+
+def test_network_state_tracking():
+    monitor = NetworkMonitor()
+
+    first_update = monitor.update_state()
+
+    assert first_update["previous"] is None
+    assert first_update["changed"] is False
+
+    second_update = monitor.update_state()
+
+    assert second_update["previous"] is not None
+    assert second_update["current"] is not None
+    assert isinstance(second_update["changed"], bool)
+
+    print("Network State Tracking              -> PASS")
+    print(f"Previous State                      -> {second_update['previous']}")
+    print(f"Current State                       -> {second_update['current']}")
+    print(f"State Changed                       -> {second_update['changed']}")
+
 if __name__ == "__main__":
     test_network_monitor_creation()
     test_interfaces_initial_state()
@@ -83,5 +119,7 @@ if __name__ == "__main__":
     test_wifi_detection()
     test_ethernet_detection()
     test_internet_detection()
+    test_network_state_collection()
+    test_network_state_tracking()
 
-    print("\nPhase 4A.4 Internet Connectivity Tests Complete")
+    print("\nPhase 4A.5 Network State Change Tests Complete")
