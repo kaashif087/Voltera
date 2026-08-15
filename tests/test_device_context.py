@@ -22,8 +22,20 @@ def test_battery_percentage():
     print(f"Battery Percentage                 -> {battery_percentage}")
 
 
+def test_charging_state():
+    device = DeviceContext()
+
+    charging_state = device.get_charging_state()
+
+    assert isinstance(charging_state, bool)
+
+    print("Charging State Detection           -> PASS")
+    print(f"Charging State                     -> {charging_state}")
+
+
 if __name__ == "__main__":
     test_device_context_creation()
     test_battery_percentage()
+    test_charging_state()
 
-    print("\nPhase 4B.1 Battery Percentage Tests Complete")
+    print("\nPhase 4B.2 Charging State Tests Complete")
