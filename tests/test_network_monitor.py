@@ -111,6 +111,36 @@ def test_network_state_tracking():
     print(f"Current State                       -> {second_update['current']}")
     print(f"State Changed                       -> {second_update['changed']}")
 
+def test_network_state_change_detection():
+    monitor = NetworkMonitor()
+
+    first_state = {
+        "wifi": True,
+        "ethernet": False,
+        "internet": True,
+    }
+
+    second_state = {
+        "wifi": False,
+        "ethernet": False,
+        "internet": False,
+    }
+
+    monitor._previous_state = first_state.copy()
+
+    monitor.get_network_state = lambda: second_state.copy()
+
+    result = monitor.update_state()
+
+    assert result["previous"] == first_state
+    assert result["current"] == second_state
+    assert result["changed"] is True
+
+    print("Network State Change Detection      -> PASS")
+    print(f"Previous State                      -> {result['previous']}")
+    print(f"Current State                       -> {result['current']}")
+    print(f"State Changed                       -> {result['changed']}")
+
 if __name__ == "__main__":
     test_network_monitor_creation()
     test_interfaces_initial_state()
@@ -121,5 +151,6 @@ if __name__ == "__main__":
     test_internet_detection()
     test_network_state_collection()
     test_network_state_tracking()
+    test_network_state_change_detection()
 
     print("\nPhase 4A.5 Network State Change Tests Complete")
