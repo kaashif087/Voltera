@@ -1,3 +1,4 @@
+import socket
 import psutil
 
 
@@ -41,5 +42,20 @@ class NetworkMonitor:
 
                 if interface_stats and interface_stats.isup:
                     return True
+        return False
+
+    def is_internet_connected(self):
+
+        test_hosts = [
+            ("8.8.8.8", 53),
+            ("1.1.1.1", 53),
+        ]
+
+        for host, port in test_hosts:
+            try:
+                with socket.create_connection((host, port), timeout=2):
+                    return True
+            except (OSError, socket.timeout):
+                continue
 
         return False
