@@ -11,3 +11,18 @@ class NetworkMonitor:
 
     def get_interfaces(self):
         return self._interfaces
+
+    def is_wifi_connected(self):
+        if not self._interfaces:
+            self.collect()
+
+        stats = psutil.net_if_stats()
+
+        for interface_name, addresses in self._interfaces.items():
+            if "wi-fi" in interface_name.lower():
+                interface_stats = stats.get(interface_name)
+
+                if interface_stats and interface_stats.isup:
+                    return True
+
+        return False
