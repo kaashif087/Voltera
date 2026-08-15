@@ -33,9 +33,22 @@ def test_charging_state():
     print(f"Charging State                     -> {charging_state}")
 
 
+def test_power_source():
+    device = DeviceContext()
+
+    power_source = device.get_power_source()
+
+    assert isinstance(power_source, str)
+    assert power_source in ["Unknown", "AC", "Battery"]
+
+    print("Power Source Detection             -> PASS")
+    print(f"Power Source                       -> {power_source}")
+
+
 if __name__ == "__main__":
     test_device_context_creation()
     test_battery_percentage()
     test_charging_state()
+    test_power_source()
 
-    print("\nPhase 4B.2 Charging State Tests Complete")
+    print("\nPhase 4B.3 Power Source Tests Complete")

@@ -21,3 +21,14 @@ class DeviceContext:
             return False
 
         return battery.power_plugged
+
+    def get_power_source(self):
+        battery = psutil.sensors_battery()
+
+        if battery is None:
+            return "Unknown"
+
+        if battery.power_plugged:
+            return "AC"
+
+        return "Battery"
