@@ -16,7 +16,10 @@
     },
     "application": {
         "active_app": null,
-        "category": null
+        "process_id": null,
+        "category": null,
+        "window_title": null,
+        "usage_duration": 0
     },
     "network": {
         "wifi": false,
@@ -25,5 +28,6 @@
     },
     "power": {
         "charger_connected": false
-    }
+    },
+    "devices": {}
 }
