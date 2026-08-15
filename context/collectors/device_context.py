@@ -32,3 +32,6 @@ class DeviceContext:
             return "AC"
 
         return "Battery"
+
+    def get_cpu_usage(self):
+        return psutil.cpu_percent(interval=1)

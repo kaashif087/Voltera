@@ -44,11 +44,22 @@ def test_power_source():
     print("Power Source Detection             -> PASS")
     print(f"Power Source                       -> {power_source}")
 
+def test_cpu_usage():
+    device = DeviceContext()
+
+    cpu_usage = device.get_cpu_usage()
+
+    assert isinstance(cpu_usage, (int, float))
+    assert 0 <= cpu_usage <= 100
+
+    print("CPU Usage Detection                 -> PASS")
+    print(f"CPU Usage                          -> {cpu_usage}%")
 
 if __name__ == "__main__":
     test_device_context_creation()
     test_battery_percentage()
     test_charging_state()
     test_power_source()
+    test_cpu_usage()
 
-    print("\nPhase 4B.3 Power Source Tests Complete")
+    print("\nPhase 4B.4 CPU Usage Tests Complete")
