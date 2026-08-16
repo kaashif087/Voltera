@@ -12,7 +12,7 @@
     },
     "sleep": {
         "sleeping": false,
-        "sleep_duration": 0
+        "sleep_duration": 0.005737
     },
     "application": {
         "active_app": null,
