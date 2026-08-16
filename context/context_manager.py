@@ -1,6 +1,7 @@
 import copy
 import json
 from pathlib import Path
+from context.context_snapshot import ContextSnapshot
 
 DEFAULT_CONTEXT = {
     "device": {
@@ -145,6 +146,16 @@ class ContextManager:
         Return the complete context.
         """
         return self.context
+
+    def create_snapshot(self):
+        """
+        Create a point-in-time snapshot of the current context.
+
+        Returns:
+            ContextSnapshot
+        """
+
+        return ContextSnapshot(self.context)
 
     def get_section(self, section):
         """
