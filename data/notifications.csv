@@ -9,3 +9,5 @@ timestamp,recommendation,priority,title,message,reason,status
 2026-07-26 19:32:58,High System Load,MEDIUM,High System Load,High CPU or RAM usage is affecting battery life.,Generated from Recommendation Engine,Sent
 2026-07-26 19:32:58,High Battery While Charging,MEDIUM,Battery Charged,Battery is highly charged. Consider unplugging the charger.,Generated from Recommendation Engine,Sent
 2026-07-26 19:32:58,Battery Stable,LOW,Battery Stable,Battery condition is stable.,Generated from Recommendation Engine,Sent
+2026-08-16 16:04:30,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-16 16:11:33,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
