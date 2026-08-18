@@ -1,9 +1,21 @@
 from orchestration import (
+    IntelligenceInput,
     Orchestrator,
     OrchestrationInput,
     OrchestrationResult,
     OrchestrationState,
 )
+
+
+def create_test_input():
+    intelligence = IntelligenceInput(
+        context={"battery": 42},
+        learning={"active_hour": 21},
+        prediction={"battery_after_one_hour": 30},
+        adaptive={"priority": "high"},
+    )
+
+    return OrchestrationInput(intelligence=intelligence)
 
 
 def test_orchestrator_initial_state():
@@ -13,12 +25,7 @@ def test_orchestrator_initial_state():
 
 
 def test_orchestration_input():
-    orchestration_input = OrchestrationInput(
-        context={"battery": 42},
-        learning={"active_hour": 21},
-        prediction={"battery_after_one_hour": 30},
-        adaptive={"priority": "high"},
-    )
+    orchestration_input = create_test_input()
 
     data = orchestration_input.to_dict()
 
@@ -30,13 +37,7 @@ def test_orchestration_input():
 
 def test_orchestration_cycle():
     orchestrator = Orchestrator()
-
-    orchestration_input = OrchestrationInput(
-        context={},
-        learning={},
-        prediction={},
-        adaptive={},
-    )
+    orchestration_input = create_test_input()
 
     result = orchestrator.orchestrate(orchestration_input)
 
@@ -63,15 +64,10 @@ def test_result_serialization():
 
 def test_orchestrator_reset():
     orchestrator = Orchestrator()
-
-    orchestration_input = OrchestrationInput(
-        context={},
-        learning={},
-        prediction={},
-        adaptive={},
-    )
+    orchestration_input = create_test_input()
 
     orchestrator.orchestrate(orchestration_input)
+
     assert orchestrator.get_state() == OrchestrationState.COMPLETED
 
     orchestrator.reset()

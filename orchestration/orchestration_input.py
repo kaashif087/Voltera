@@ -1,29 +1,38 @@
 from dataclasses import dataclass
 from typing import Any, Dict
 
+from .intelligence_input import IntelligenceInput
+
 
 @dataclass
 class OrchestrationInput:
     """
-    Standardized input passed into the VOLTERA orchestrator.
+    Input contract for the VOLTERA orchestrator.
 
-    The fields intentionally use generic dictionaries at this stage.
-    Later phases will populate them with outputs from the existing
-    intelligence systems.
+    The orchestration layer receives one unified intelligence
+    structure instead of handling separate intelligence payloads.
     """
 
-    context: Dict[str, Any]
-    learning: Dict[str, Any]
-    prediction: Dict[str, Any]
-    adaptive: Dict[str, Any]
+    intelligence: IntelligenceInput
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> Dict[str, Dict[str, Any]]:
         """
-        Convert orchestration input into a dictionary.
+        Convert orchestration input into a serializable dictionary.
         """
-        return {
-            "context": self.context,
-            "learning": self.learning,
-            "prediction": self.prediction,
-            "adaptive": self.adaptive,
-        }
+        return self.intelligence.to_dict()
+
+    @property
+    def context(self) -> Dict[str, Any]:
+        return self.intelligence.context
+
+    @property
+    def learning(self) -> Dict[str, Any]:
+        return self.intelligence.learning
+
+    @property
+    def prediction(self) -> Dict[str, Any]:
+        return self.intelligence.prediction
+
+    @property
+    def adaptive(self) -> Dict[str, Any]:
+        return self.intelligence.adaptive
