@@ -1,26 +1,10 @@
 {
-    "usage_patterns": {
-        "active_hours": [
-            9,
-            10,
-            11
-        ]
-    },
-    "charging_patterns": {
-        "usual_charging_hour": 21
-    },
-    "battery_behavior": {
-        "average_drain_rate": 10.0,
-        "battery_stability": "Stable"
-    },
-    "application_usage": {
-        "most_used_apps": {
-            "VS Code": 10,
-            "Chrome": 5
-        }
-    },
+    "usage_patterns": {},
+    "charging_patterns": {},
+    "battery_behavior": {},
+    "application_usage": {},
     "metadata": {
         "samples": 0,
-        "last_updated": "2026-08-01T22:41:20"
+        "last_updated": "2026-08-19T22:36:17"
     }
 }
