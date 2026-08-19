@@ -7,6 +7,10 @@ from .context_prediction import (
     ContextPredictionCoordinator,
     ContextPredictionResult,
 )
+from .learning_adaptive import (
+    LearningAdaptiveCoordinator,
+    LearningAdaptiveResult,
+)
 
 __all__ = [
     "Orchestrator",
@@ -16,4 +20,6 @@ __all__ = [
     "IntelligenceInput",
     "ContextPredictionCoordinator",
     "ContextPredictionResult",
+    "LearningAdaptiveCoordinator",
+    "LearningAdaptiveResult",
 ]
