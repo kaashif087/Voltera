@@ -11,3 +11,69 @@ timestamp,recommendation,priority,title,message,reason,status
 2026-07-26 19:32:58,Battery Stable,LOW,Battery Stable,Battery condition is stable.,Generated from Recommendation Engine,Sent
 2026-08-16 16:04:30,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
 2026-08-16 16:11:33,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,High System Load,MEDIUM,High System Load,High CPU or RAM usage is affecting battery life.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,High Battery While Charging,MEDIUM,Battery Charged,Battery is highly charged. Consider unplugging the charger.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:16,Battery Stable,LOW,Battery Stable,Battery condition is stable.,Generated from Recommendation Engine,Sent
+2026-08-18 23:01:17,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-19 15:40:57,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:44,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:44,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:44,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:44,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:44,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:44,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-19 21:34:45,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:17,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:17,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:17,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:17,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:17,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:17,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-19 22:36:18,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:37,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:37,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:37,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:37,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:37,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:37,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-20 22:25:38,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:16,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:16,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:16,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:16,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:16,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:16,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-20 22:40:17,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:48,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:48,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:48,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:48,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:48,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:48,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-20 22:44:49,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:15,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:15,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:15,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:15,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:15,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:15,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-20 22:55:16,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:23,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:23,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:23,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:23,Low Battery Level,HIGH,Low Battery,Battery is running low. Please charge your device soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:23,Predicted Low Battery,HIGH,Battery Prediction,Battery is predicted to become low soon.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:23,Rapid Battery Drain,HIGH,Rapid Battery Drain,Battery is draining faster than expected.,Generated from Recommendation Engine,Sent
+2026-08-20 22:57:24,Critical Battery Level,CRITICAL,Critical Battery,Battery is critically low. Connect your charger immediately.,Generated from Recommendation Engine,Sent

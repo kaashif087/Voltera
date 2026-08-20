@@ -4,9 +4,8 @@
     "prediction_alerts": true,
     "rapid_drain_alerts": true,
     "high_system_load_alerts": true,
-    "gaming_mode": false,
+    "gaming_mode": true,
     "quiet_hours_enabled": false,
     "quiet_start": "23:00",
     "quiet_end": "07:00"
 }
-
